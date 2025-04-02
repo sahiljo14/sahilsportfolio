@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sahil - Developer Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: rgb(0, 0, 33);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 80px;
+            background-color: rgb(8, 8, 58);
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin: 0 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            transition: color 0.3s, font-size 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: rgb(141, 141, 194);
+            font-size: 1.05rem;
+        }
+
+        .left {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        main hr {
+            border: 0;
+            background: #9c97f1;
+            height: 2px;
+            margin: 100px auto;
+            max-width: 80%;
+        }
+
+        .firstSection {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 150px 0;
+        }
+
+        .firstSection div> {
+            width: 40%;
+        }
+
+        .leftSection {
+            font-size: 3rem;
+        }
+
+        .leftSection .buttons {
+            padding: 40px 0;
+        }
+
+        .leftSection .buttons a {
+            text-decoration: none;
+        }
+
+        .leftSection .btn {
+            padding: 12px;
+            background: #1e2167;
+            color: white;
+            border: 2px solid lightslategray;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .rightSection img {
+            width: 100%;
+            margin: 23px 0;
+        }
+
+        .purple {
+            color: rgb(136, 24, 241);
+        }
+
+        #element {
+            color: rgb(136, 24, 241);
+        }
+
+        .secondSection,
+        .ThirdSection,
+        .fourthSection,
+        .fifthSection {
+            max-width: 80%;
+            margin: 100px auto;
+            padding: 20px;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .ThirdSection {
+          padding-bottom: 80px; /* Add padding to push hr down */
+        }
+
+        .secondSection.show,
+        .ThirdSection.show,
+        .fourthSection.show,
+        .fifthSection.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .secondSection h1,
+        .ThirdSection h1,
+        .fourthSection h1,
+        .fifthSection h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .secondSection h2 {
+            margin-top: 30px;
+        }
+
+        .secondSection ul,
+        .ThirdSection ul,
+        .fifthSection ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .secondSection li,
+        .ThirdSection li,
+        .fifthSection li {
+            margin-bottom: 10px;
+        }
+
+        .secondSection img,
+        .ThirdSection img,
+        .fifthSection img {
+            max-width: 300px;
+            float: right;
+            margin-left: 20px;
+        }
+
+        .fourthSection img {
+            max-width: 250px;
+            margin: 20px auto;
+        }
+
+        .fourthSection {
+          text-align: center;
+        }
+
+        footer {
+            background-color: rgb(8, 8, 58);
+            color: gray;
+            padding: 30px 0;
+            text-align: center;
+        }
+
+        .footer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer>div {
+            width: 100%;
+            margin: 15px 0;
+        }
+
+        .footer ul {
+            list-style: none;
+            padding: 10px 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .footer ul li {
+            margin: 0 20px;
+        }
+
+        .footer ul li a {
+            color: gray;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer ul li a:hover {
+            color: white;
+        }
+
+        footer .footer-rights {
+            margin-top: 25px;
+            font-size: 0.9rem;
+        }
+
+        @media screen and (max-width: 768px) {
+            .firstSection {
+                flex-direction: column-reverse;
+            }
+
+            .firstSection div> {
+                width: 100%;
+            }
+
+            .leftSection,
+            .rightSection {
+                max-width: 100%;
+                padding: 10px;
+            }
+
+            .leftSection h1 {
+                font-size: 2.5rem;
+            }
+
+            .footer {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="left">Sahil's Portfolio</div>
+            <div class="right">
+                <ul>
+                    <a href="#home" style="text-decoration: none; color: white;">
+                        <li>Home</li>
+                    </a>
+                    <a href="#about" style="text-decoration: none; color: white;">
+                        <li>About</li>
+                    </a>
+                    <a href="#projects" style="text-decoration: none; color: white;">
+                        <li>Projects</li>
+                    </a>
+                    <a href="#contact" style="text-decoration: none; color: white;">
+                        <li>Contact Me</li>
+                    </a>
+                    <a href="#certificates" style="text-decoration: none; color: white;">
+                        <li>Certificates</li>
+                    </a>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section id="home" class="firstSection">
+            <div class="leftSection">
+                <h1>Hi, My Name is <span class="purple">Sahil</span></h1>
+                <div>and I am</div>
+                <span id="element"></span>
+                <div class="buttons">
+                    <a href="https://drive.usercontent.google.com/download?id=1Yr1PHlqplkjlbhzzQH6NcCIsv0LYPhlH&export=download&authuser=0">
+                        <button class="btn">Download Resume</button>
+                    </a>
+                    <a href="https://github.com/sahiljo14">
+                        <button class="btn">Visit GitHub</button>
+                    </a>
+                </div>
+            </div>
+            <div class="rightSection">
+                <img src="bg1.png" alt="Sahil's Image">
+            </div>
+        </section>
+        <hr>
+        <section id="about" class="secondSection">
+            <h1>About Me</h1>
+            <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt="About Me Image">
+            <p>
+                I'm an electronics student pursuing a BTech in ECE with a strong foundation in both hardware and
+                software development. My skillset spans C++, C, embedded C, Python, and web technologies. I've
+                successfully completed projects like an ESP32-powered NES emulator and a comprehensive mini weather
+                station, demonstrating my ability to integrate hardware and software solutions. I'm adept at utilizing
+                various electronics and software development tools. Driven by a deep curiosity for technology, I'm
+                constantly seeking new knowledge and exploring emerging trends.
+            </p>
+            <h2>Skills</h2>
+            <ul>
+                <li>Embedded Systems Development</li>
+                <li>IoT & Sensor Integration</li>
+                <li>Programming (C, C++, Python, Embedded C)</li>
+                <li>Hardware-Software Integration</li>
+                <li>Web Development</li>
+                <li>Critical Thinking</li>
+                <li>Teamwork and Leadership</li>
+            </ul>
+        </section>
+        <hr>
+        <section id="projects" class="ThirdSection">
+            <h1>Projects</h1>
+            <img src="proj.png" alt="Projects Image">
+            <ul>
+                <li><strong>Mini Weather Station</strong> | Developed an ESP8266 based Mini Weather Station capable of
+                    monitoring temperature, humidity, and atmospheric pressure.</li>
+                <li><strong>Mini Gaming Console</strong> | Built a portable NES emulator gaming console using ESP32 and
+                    an ILI9341 LCD display, enabling smooth gameplay and interactive user experience.</li>
+            </ul>
+        </section>
+        <hr>
+        <section id="contact" class="fourthSection">
+            <h1>Contact Me</h1>
+            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt="Contact Image">
+            <h3>Sahil Joshi</h3>
+            <p>Electronics Engineering Student</p>
+            <p>Contact: 9834591604 | Email: sahil.joshi@mitwpu.edu.in</p>
+            <p>Location: Pune, Maharashtra, India</p>
+            <p>
+                <a href="https://www.linkedin.com/in/sahil-joshi-a164b11a0/" target="_blank">LinkedIn</a> |
+                <a href="https://github.com/sahiljo14" target="_blank">GitHub</a> |
+                <a href="https://leetcode.com/u/sahiljo/" target="_blank">LeetCode</a>
+            </p>
+        </section>
+        <hr>
+        <section id="certificates" class="fifthSection">
+            <h1>Certificates</h1>
+            <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt="Certificates Image">
+            <ul>
+                <li>Completion of Arduino Training - IIT Bombay | Spoken Tutorial (Sep 2024)</li>
+                <li>Critical Thinking & Problem Solving - Rochester Institute of Technology | edX (Feb 2024)</li>
+                <li>Data Analysis and Data Visualization - IBM | edX (Feb 2024)</li>
+                <li>Personal Financial Planning - Indiana University | edX (Feb 2024)</li>
+                <li>Social Emotional Skills - University of California | edX (Feb 2024)</li>
+                <li>Teamwork & Collaboration - Rochester Institute of Technology | edX (Feb 2024)</li>
+                <li>Matlab ONRAMP(Nov 2024)</li>
+                <li>Matlab Signal Processing ONRAMP(Nov 2024)</li>
+            </ul>
+        </section>
+        <hr>
+        <footer>
+            <div class="footer">
+                <div>
+                    <h3>Sahil's Developer Portfolio</h3>
+                </div>
+                <div>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#projects">Projects</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#certificates">Certificates</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-rights">
+                Copyright &#169; www.sahilsportfolio.github.com | All rights reserved
+            </div>
+        </footer>
+    </main>
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+    <script>
+        var typed = new Typed('#element', {
+            strings: ['an Electronics Student.', 'a Tech Enthusiast.', 'a Software Developer.'],
+            typeSpeed: 50,
+        });
+
+        function reveal() {
+            var reveals = document.querySelectorAll(".secondSection, .ThirdSection, .fourthSection, .fifthSection");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("show");
+                } else {
+                    reveals[i].classList.remove("show");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+    </script>
+</body>
+
+</html>
