@@ -9,255 +9,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
 
-        body {
-            background-color: rgb(0, 0, 33);
-            color: white;
-            font-family: 'Poppins', sans-serif;
-            line-height: 1.6;
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            height: 80px;
-            background-color: rgb(8, 8, 58);
-        }
-
-        nav ul {
-            display: flex;
-            justify-content: center;
-            list-style: none;
-        }
-
-        nav ul li {
-            margin: 0 20px;
-        }
-
-        nav ul li a {
-            text-decoration: none;
-            color: white;
-            transition: color 0.3s, font-size 0.3s;
-        }
-
-        nav ul li a:hover {
-            color: rgb(141, 141, 194);
-            font-size: 1.05rem;
-        }
-
-        .left {
-            font-size: 1.8rem;
-            font-weight: 600;
-        }
-
-        main hr {
-            border: 0;
-            background: #9c97f1;
-            height: 2px;
-            margin: 100px auto;
-            max-width: 80%;
-        }
-
-        .firstSection {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            margin: 150px 0;
-        }
-
-        .firstSection div> {
-            width: 40%;
-        }
-
-        .leftSection {
-            font-size: 3rem;
-        }
-
-        .leftSection .buttons {
-            padding: 40px 0;
-        }
-
-        .leftSection .buttons a {
-            text-decoration: none;
-        }
-
-        .leftSection .btn {
-            padding: 12px;
-            background: #1e2167;
-            color: white;
-            border: 2px solid lightslategray;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-
-        .rightSection img {
-            width: 100%;
-            margin: 23px 0;
-        }
-
-        .purple {
-            color: rgb(136, 24, 241);
-        }
-
-        #element {
-            color: rgb(136, 24, 241);
-        }
-
-        .secondSection,
-        .ThirdSection,
-        .fourthSection,
-        .fifthSection {
-            max-width: 80%;
-            margin: 100px auto;
-            padding: 20px;
-            opacity: 0;
-            transform: translateY(50px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-
-        .ThirdSection {
-            padding-bottom: 80px;
-        }
-
-        .secondSection.show,
-        .ThirdSection.show,
-        .fourthSection.show,
-        .fifthSection.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .secondSection h1,
-        .ThirdSection h1,
-        .fourthSection h1,
-        .fifthSection h1 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .secondSection h2 {
-            margin-top: 30px;
-        }
-
-        .secondSection ul,
-        .ThirdSection ul,
-        .fifthSection ul {
-            list-style-type: disc;
-            margin-left: 20px;
-            margin-top: 10px;
-        }
-
-        .secondSection li,
-        .ThirdSection li,
-        .fifthSection li {
-            margin-bottom: 10px;
-        }
-
-        .secondSection img,
-        .ThirdSection img,
-        .fifthSection img {
-            max-width: 300px;
-            float: right;
-            margin-left: 20px;
-        }
-
-        .fourthSection img {
-            max-width: 250px;
-            margin: 20px auto;
-        }
-
-        .fourthSection {
-            text-align: center;
-        }
-        .fourthSection p a{
-            text-decoration: none;
-            color: rgb(163, 181, 247);
-        }
-
-        .fifthSection ul li a{
-            text-decoration: none;
-            color: rgb(222, 210, 210);
-        }
-        footer {
-            background-color: rgb(8, 8, 58);
-            color: gray;
-            padding: 30px 0;
-            text-align: center;
-        }
-
-        .footer {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .footer>div {
-            width: 100%;
-            margin: 15px 0;
-        }
-
-        .footer ul {
-            list-style: none;
-            padding: 10px 0;
-            display: flex;
-            justify-content: center;
-        }
-
-        .footer ul li {
-            margin: 0 20px;
-        }
-
-        .footer ul li a {
-            color: gray;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer ul li a:hover {
-            color: white;
-        }
-
-        footer .footer-rights {
-            margin-top: 25px;
-            font-size: 0.9rem;
-        }
-
-        @media screen and (max-width: 768px) {
-            .firstSection {
-                flex-direction: column-reverse;
-            }
-
-            .firstSection div> {
-                width: 100%;
-            }
-
-            .leftSection,
-            .rightSection {
-                max-width: 100%;
-                padding: 10px;
-            }
-
-            .leftSection h1 {
-                font-size: 2.5rem;
-            }
-
-            .footer {
-                flex-direction: column;
-                align-items: center;
-            }
-        }
     </style>
 </head>
+<link rel="stylesheet" href="styles.css">
 
 <body>
     <header>
@@ -360,15 +115,27 @@
             <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 alt="Certificates Image">
             <ul>
-                <li><a href="https://www.linkedin.com/in/sahil-joshi-a164b11a0/details/certifications/1743158174342/single-media-viewer/?profileId=ACoAAC8PN3IBI77i2sE3iNLoOVQBasJ6uUibCro" target="_blank">Completion of Arduino Training - IIT Bombay | Spoken Tutorial (Sep 2024)</a></li>
-                <li><a href="https://courses.edx.org/certificates/6acef60d32bc4859b29b0bb68f671a05" target="_blank">Critical Thinking & Problem Solving - Rochester Institute of Technology | edX (Feb 2024)</a></li>
-                <li><a href="https://courses.edx.org/certificates/51c3cc0f2d1945b5ad5f395d40c8382b" target="_blank">Data Analysis and Data Visualization - IBM | edX (Feb 2024)</a></li>
-                <li><a href="https://courses.edx.org/certificates/b995f3af008d469d8da97cfbabf51506" target="_blank">Personal Financial Planning - Indiana University | edX (Feb 2024)</a></li>
-                <li><a href="https://courses.edx.org/certificates/f8386a7bdc5c40b386556981b25c370b" target="_blank">Social Emotional Skills - University of California | edX (Feb 2024)</a></li>
-                <li><a href="https://courses.edx.org/certificates/ac2755925a4e492081c59630670237ed" target="_blank">Teamwork & Collaboration - Rochester Institute of Technology | edX (Feb 2024)</a></li>
-                <li><a href="https://courses.edx.org/certificates/2fcc0a3c56d8427b99139577b1e21a3f" target="_blank">Measuring Sustainable Development - SDG Academy | edX (Feb 2024)</a></li>
-                <li><a href="https://matlabacademy.mathworks.com/progress/share/certificate.html?id=249f4746-771f-46fb-a704-5ccc709f5096&" target="_blank">Matlab ONRAMP (Nov 2024)</a></li>
-                <li><a href="https://matlabacademy.mathworks.com/progress/share/certificate.html?id=045ad3ff-c084-47e4-92be-bc007079e25c&" target="_blank">Matlab Signal Processing ONRAMP (Nov2024)</a></li>
+                <li><a href="https://www.linkedin.com/in/sahil-joshi-a164b11a0/details/certifications/1743158174342/single-media-viewer/?profileId=ACoAAC8PN3IBI77i2sE3iNLoOVQBasJ6uUibCro"
+                        target="_blank">Completion of Arduino Training - IIT Bombay | Spoken Tutorial (Sep 2024)</a>
+                </li>
+                <li><a href="https://courses.edx.org/certificates/6acef60d32bc4859b29b0bb68f671a05"
+                        target="_blank">Critical Thinking & Problem Solving - Rochester Institute of Technology | edX
+                        (Feb 2024)</a></li>
+                <li><a href="https://courses.edx.org/certificates/51c3cc0f2d1945b5ad5f395d40c8382b" target="_blank">Data
+                        Analysis and Data Visualization - IBM | edX (Feb 2024)</a></li>
+                <li><a href="https://courses.edx.org/certificates/b995f3af008d469d8da97cfbabf51506"
+                        target="_blank">Personal Financial Planning - Indiana University | edX (Feb 2024)</a></li>
+                <li><a href="https://courses.edx.org/certificates/f8386a7bdc5c40b386556981b25c370b"
+                        target="_blank">Social Emotional Skills - University of California | edX (Feb 2024)</a></li>
+                <li><a href="https://courses.edx.org/certificates/ac2755925a4e492081c59630670237ed"
+                        target="_blank">Teamwork & Collaboration - Rochester Institute of Technology | edX (Feb
+                        2024)</a></li>
+                <li><a href="https://courses.edx.org/certificates/2fcc0a3c56d8427b99139577b1e21a3f"
+                        target="_blank">Measuring Sustainable Development - SDG Academy | edX (Feb 2024)</a></li>
+                <li><a href="https://matlabacademy.mathworks.com/progress/share/certificate.html?id=249f4746-771f-46fb-a704-5ccc709f5096&"
+                        target="_blank">Matlab ONRAMP (Nov 2024)</a></li>
+                <li><a href="https://matlabacademy.mathworks.com/progress/share/certificate.html?id=045ad3ff-c084-47e4-92be-bc007079e25c&"
+                        target="_blank">Matlab Signal Processing ONRAMP (Nov2024)</a></li>
             </ul>
         </section>
         <hr>
