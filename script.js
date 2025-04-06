@@ -17,3 +17,4 @@ function reveal() {
     }
 }
 window.addEventListener("scroll", reveal);
+document.addEventListener("DOMContentLoaded", reveal);
