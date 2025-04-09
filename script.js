@@ -1,20 +1,27 @@
 var typed = new Typed('#element', {
     strings: ['an Electronics Student.', 'a Tech Enthusiast.', 'a Software Developer.'],
     typeSpeed: 70,
+    backSpeed: 50,
+    loop: true
 });
 
-function reveal() {
-    var reveals = document.querySelectorAll(".secondSection, .ThirdSection, .fourthSection, .fifthSection");
-    for (var i = 0; i < reveals.length; i++) {
-        var windowHeight = window.innerHeight;
-        var elementTop = reveals[i].getBoundingClientRect().top;
-        var elementVisible = 150;
-        if (elementTop < windowHeight - elementVisible) {
-            reveals[i].classList.add("show");
+function revealSections() {
+    const sections = document.querySelectorAll('.reveal');
+    const windowHeight = window.innerHeight;
+
+    sections.forEach(section => {
+        const sectionTop = section.getBoundingClientRect().top;
+        const sectionBottom = section.getBoundingClientRect().bottom;
+
+        // Check if section is in viewport
+        if (sectionTop < windowHeight - 100 && sectionBottom > 100) {
+            section.classList.add('show');
         } else {
-            reveals[i].classList.remove("show");
+            section.classList.remove('show');
         }
-    }
+    });
 }
-window.addEventListener("scroll", reveal);
-document.addEventListener("DOMContentLoaded", reveal);
+
+// Trigger on scroll and page load
+window.addEventListener('scroll', revealSections);
+window.addEventListener('load', revealSections);
