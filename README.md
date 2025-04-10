@@ -79,6 +79,6 @@ This portfolio is built using **vanilla HTML**, **CSS**, and **JavaScript** — 
 Feel free to connect:
 
 - GitHub: [@sahiljo14](https://github.com/sahiljo14)
-- Email: [sahil140106@gmail.com] *(replace with your real email)*  
-- LinkedIn: [Sahil Joshi](https://www.linkedin.com/in/sahil-joshi-a164b11a0/)] *(replace with your LinkedIn)*
+- Email: sahil140106@gmail.com
+- LinkedIn: [Sahil Joshi](https://www.linkedin.com/in/sahil-joshi-a164b11a0/)]]
 
