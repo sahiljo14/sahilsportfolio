@@ -80,5 +80,5 @@ Feel free to connect:
 
 - GitHub: [@sahiljo14](https://github.com/sahiljo14)
 - Email: sahil140106@gmail.com
-- LinkedIn: [Sahil Joshi](https://www.linkedin.com/in/sahil-joshi-a164b11a0/)]]
+- LinkedIn: [Sahil Joshi](https://www.linkedin.com/in/sahil-joshi-a164b11a0/)
 
