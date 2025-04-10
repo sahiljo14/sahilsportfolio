@@ -98,6 +98,7 @@ nav ul li a:hover {
     font-weight: 600;
     margin-left: -6.9%; /* Align with intro line */
 }
+
 /* Hero Section */
 main hr {
     border: 0;
@@ -393,11 +394,8 @@ main hr {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center; /* <-- Add this for vertical centering */
     text-align: center;
-    min-height: 200px; /* Optional: Ensures consistent height */
 }
-
 
 .cert-card:hover {
     transform: translateY(-0.5rem);
