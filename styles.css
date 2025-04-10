@@ -393,6 +393,7 @@ main hr {
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
 }
 
 .cert-card:hover {
