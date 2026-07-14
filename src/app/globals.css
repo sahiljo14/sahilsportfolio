@@ -1,0 +1,6 @@
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+body {
+    background: rgb(130, 130, 234);
+}

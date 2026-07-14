@@ -1,84 +1,36 @@
-# 💼 My Developer Portfolio
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-Welcome to the GitHub repository for my personal developer portfolio website!  
-This project is a reflection of my journey as a developer — showcasing who I am, the skills I’ve learned, and the projects I’ve built along the way.
+## Getting Started
 
----
+First, run the development server:
 
-## 🌐 Live Demo
-
-Check it out live here 👉 [sahiljo14.github.io/sahilsportfolio/](https://sahiljo14.github.io/sahilsportfolio/)
-
----
-
-## 📁 Project Overview
-
-This portfolio is built using **vanilla HTML**, **CSS**, and **JavaScript** — no frameworks, just clean, fast, and fully customizable code. It’s designed to be lightweight, performant, and visually engaging across all devices.
-
-### ✨ Key Highlights
-
-- ⚡ **Responsive Design** – Looks great on all screen sizes  
-- 🎯 **Animated Sections** – Smooth fade-in and scroll animations for an engaging UX  
-- 🧠 **Skills Grid** – Clearly showcases tech stack with icons  
-- 💡 **Project Showcase** – Includes project cards with GitHub links and live demos  
-- 📬 **Contact Section** – Easy access to email and social links  
-- 🌙 **Dark Aesthetic** – Stylish and modern UI with subtle gradients and shadows  
-
----
-
-## 🛠️ Built With
-
-- **HTML5** – Markup and structure  
-- **CSS3** – Custom styles, layouts, and responsive design  
-- **JavaScript (ES6)** – DOM interactions, animations, and logic  
-
----
-
-## 🗂️ Folder Structure
-
-```
-├── index.html        # Main HTML structure
-├── style.css         # All CSS styling
-├── script.js         # JavaScript for animations/interactions
-├── assets/           # Images, icons, and other static assets
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
----
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## 📸 Screenshots
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-> *Optional: Add screenshots of your homepage, skills, and project section here to give visitors a preview of your portfolio UI.*
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
----
+## Learn More
 
-## 🧩 How to Use
+To learn more about Next.js, take a look at the following resources:
 
-1. **Clone the Repository**
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-   ```bash
-   git clone https://github.com/sahiljo14/sahilsportfolio.git
-   cd sahilsportfolio
-   ```
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-2. **Open `index.html` in your browser**
+## Deploy on Vercel
 
-   Or use a local dev server like Live Server (VS Code extension) for smoother development.
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
----
-
-## 🙌 Acknowledgements
-
-- [Font Awesome](https://fontawesome.com/) – for icons  
-- [Google Fonts – Poppins](https://fonts.google.com/specimen/Poppins) – for typography  
-- Inspiration from countless open-source portfolios and creative devs ✨  
-
----
-
-## 📫 Contact Me
-
-Feel free to connect:
-
-- GitHub: [@sahiljo14](https://github.com/sahiljo14)
-- Email: ***REDACTED-EMAIL***
-- LinkedIn: [Sahil Joshi](https://www.linkedin.com/in/sahil-joshi-a164b11a0/)
-
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
