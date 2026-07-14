@@ -1,4 +1,6 @@
-export const projects = [
+import type { Project } from "@/types/project";
+
+export const projects: Project[] = [
   {
     id: "iot-platform",
     title: "Real-Time IoT Environment Monitoring Platform",

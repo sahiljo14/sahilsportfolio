@@ -1,3 +1,5 @@
+import { Footer } from "@/components/layout/footer";
+import { Navbar } from "@/components/layout/navbar";
 import type { Metadata } from "next";
 import "./globals.css";
 
@@ -14,7 +16,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
+        <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );
