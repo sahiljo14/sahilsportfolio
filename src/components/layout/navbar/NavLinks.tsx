@@ -1,3 +1,5 @@
+"use client"
+import { useUIStore, type Section } from "@/store/ui-store";
 const navigationItems = [
   { href: "/#about", label: "About" },
   { href: "/#skills", label: "Skills" },
@@ -12,14 +14,25 @@ type NavLinksProps = {
 };
 
 export default function NavLinks({ className, onNavigate }: NavLinksProps) {
+  const activeSection = useUIStore((state) => state.activeSection);
+  const setActiveSection = useUIStore(
+    (state) => state.setActiveSection
+  );
   return (
     <nav aria-label="Primary navigation" className={className}>
       {navigationItems.map((item) => (
         <a
           key={item.href}
           href={item.href}
-          onClick={onNavigate}
-          className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+          onClick={() => {
+            onNavigate?.();
+            setActiveSection(item.href.replace("/#", "") as Section);
+          }}
+          className={`text-sm font-medium transition-colors ${
+            activeSection === item.href.replace("/#", "")
+              ? "text-foreground"
+              : "text-muted-foreground hover:text-foreground"
+          }`}
         >
           {item.label}
         </a>

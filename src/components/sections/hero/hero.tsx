@@ -1,6 +1,8 @@
 import { profile } from "@/data/profile";
 import { Button } from "@/components/ui/button";
+import heroImage from "@/assets/hero.jpg";
 import { Download } from "lucide-react";
+import Image from "next/image";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 
 export default function Hero() {
@@ -74,10 +76,14 @@ export default function Hero() {
 
         <div className="flex items-center justify-center">
 
-          <div className="flex h-80 w-80 items-center justify-center rounded-full border bg-muted shadow-xl">
-
-            PHOTO
-
+          <div className="relative h-80 w-80 overflow-hidden rounded-full border bg-muted shadow-xl">
+            <Image
+              src={heroImage}
+              alt="Sahil Joshi"
+              fill
+              className="object-cover"
+              sizes="320px"
+            />
           </div>
 
         </div>

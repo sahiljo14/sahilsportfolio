@@ -4,14 +4,17 @@ import { Button } from "@/components/ui/button";
 import { profile } from "@/data/profile";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
+import { useUIStore } from "@/store/ui-store";
 
 import NavLinks from "./NavLinks";
 import ThemeToggle from "./ThemeToggle";
 
 export default function MobileMenu() {
-  const [isOpen, setIsOpen] = useState(false);
+  const isOpen = useUIStore((state) => state.isMenuOpen);
 
-  const closeMenu = () => setIsOpen(false);
+const setMenuOpen = useUIStore((state) => state.setMenuOpen);
+
+  const closeMenu = () => setMenuOpen(false);
 
   return (
     <div className="md:hidden">
@@ -22,7 +25,7 @@ export default function MobileMenu() {
         aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
         aria-controls="mobile-navigation"
         aria-expanded={isOpen}
-        onClick={() => setIsOpen((open) => !open)}
+        onClick={() => setMenuOpen(!isOpen)}
       >
         {isOpen ? <X /> : <Menu />}
       </Button>
