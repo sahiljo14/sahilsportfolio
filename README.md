@@ -49,11 +49,11 @@ Content tests validate routes, required evidence, asset existence, ownership lab
 
 For a different running preview, set `PREVIEW_URL=http://127.0.0.1:3001 npm run test:browser`. The default test expects a root-path preview; use a normal root build for the full suite.
 
-## Deployment preparation — no deployment performed
+## Deployment
 
-Any static host can serve `out/`. There is no contact server to configure; email actions use the user-approved `mailto:` address. Build once for the intended path and canonical URL.
+The site is live at <https://sahiljo14.github.io/sahilsportfolio/>. Every push to `public-release` runs `.github/workflows/deploy.yml`, which installs, typechecks, lints, builds, runs the content tests and publishes `out/` through GitHub Pages. If any step fails, the live site stays as it was. To roll back, revert the bad commit on `public-release` and push.
 
-For the existing GitHub Pages project path:
+There is no contact server to configure; email actions use the user-approved `mailto:` address. The workflow builds for the project path with:
 
 ```sh
 NEXT_PUBLIC_BASE_PATH=/sahilsportfolio \
@@ -61,7 +61,7 @@ NEXT_PUBLIC_SITE_URL=https://sahiljo14.github.io/sahilsportfolio \
 npm run build
 ```
 
-Deploy the contents of `out/` only after reviewing and approving the result. GitHub Pages must use an artifact-based Pages workflow or a `.nojekyll` file so `_next` assets are served. For a root domain or Vercel static hosting, leave `NEXT_PUBLIC_BASE_PATH` unset and set `NEXT_PUBLIC_SITE_URL` to the intended full HTTPS URL. The base path must start with `/` and have no trailing slash.
+For a root domain, leave `NEXT_PUBLIC_BASE_PATH` unset and set `NEXT_PUBLIC_SITE_URL` to the full HTTPS URL. The base path must start with `/` and have no trailing slash.
 
 To inspect a subpath build locally:
 

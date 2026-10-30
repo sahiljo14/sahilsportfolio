@@ -24,7 +24,7 @@ createServer(async (req, res) => {
     const pathname = decodeURIComponent(
       new URL(req.url, "http://localhost").pathname,
     );
-    if (prefix && pathname === "/") {
+    if (prefix && (pathname === "/" || pathname === prefix)) {
       res.writeHead(302, { Location: `${prefix}/` });
       res.end();
       return;
