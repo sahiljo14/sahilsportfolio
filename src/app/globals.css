@@ -1,0 +1,2595 @@
+/* Two voices. Source Serif 4 at display size is Sahil talking; Schibsted
+   Grotesk names the things he built and carries the labels.
+   Four fields: cool paper, raised paper, perfboard green (the one drench) and
+   the lit Agent Orchestrator panel. */
+
+:root {
+  color-scheme: light;
+  --paper: #eff1f1;
+  --paper-2: #e2e6e5;
+  --ink: #131816;
+  --ink-2: #2f3834;
+  --ink-3: #535d58;
+  --rule: #c9cfcc;
+  --accent: #0b6b4d;
+  --accent-ink: #0a6448;
+  --select: #bfe3d2;
+  --board: #0d4a36;
+  --board-ink: #eef5f0;
+  --board-2: #c3dacd;
+  --board-rule: #2d6c55;
+  --screen: #0b100e;
+  --screen-glow: #1b4636;
+  --screen-ink: #eef1ec;
+  --screen-2: #c6cfc9;
+  --screen-rule: #2a3530;
+
+  --font-display: var(--font-grotesk), "Helvetica Neue", Arial, sans-serif;
+  --font-text: var(--font-serif), Georgia, serif;
+
+  --fs-d1: clamp(2.5rem, 1.25rem + 4.7vw, 5.75rem);
+  --fs-d2: clamp(2rem, 1.2rem + 2.9vw, 4rem);
+  --fs-d3: clamp(1.5rem, 1.15rem + 1.25vw, 2.375rem);
+  --fs-title: clamp(1.375rem, 1.15rem + 0.8vw, 1.875rem);
+  --fs-lede: clamp(1.25rem, 1.1rem + 0.45vw, 1.5rem);
+  --fs-body: clamp(1.125rem, 1.03rem + 0.28vw, 1.3125rem);
+  --fs-small: clamp(1.0625rem, 1rem + 0.15vw, 1.125rem);
+  --fs-meta: 0.9375rem;
+
+  --gutter: clamp(1.25rem, 4vw, 4rem);
+  --max: 88rem;
+  --edge: max(var(--gutter), calc((100vw - var(--max)) / 2));
+  --gap: clamp(1rem, 2.5vw, 2.5rem);
+  --space: clamp(4.5rem, 2.75rem + 5.5vw, 8.5rem);
+  --header: 4.25rem;
+  --radius: 10px;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #0d1110;
+  --paper-2: #161c1a;
+  --ink: #edf0eb;
+  --ink-2: #c8d0ca;
+  --ink-3: #9aa49e;
+  --rule: #2b332f;
+  --accent: #7fd1a8;
+  --accent-ink: #93dbb7;
+  --select: #1f4d3c;
+  --board: #0f4433;
+  --board-2: #c0d8ca;
+  --board-rule: #2a6a53;
+  --screen: #141c19;
+  --screen-glow: #1f5541;
+  --screen-rule: #33413a;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --paper: #0d1110;
+    --paper-2: #161c1a;
+    --ink: #edf0eb;
+    --ink-2: #c8d0ca;
+    --ink-3: #9aa49e;
+    --rule: #2b332f;
+    --accent: #7fd1a8;
+    --accent-ink: #93dbb7;
+    --select: #1f4d3c;
+    --board: #0f4433;
+    --board-2: #c0d8ca;
+    --board-rule: #2a6a53;
+    --screen: #141c19;
+    --screen-glow: #1f5541;
+    --screen-rule: #33413a;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: 5.5rem;
+  accent-color: var(--accent);
+  scrollbar-color: var(--rule) var(--paper);
+}
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+  @view-transition {
+    navigation: auto;
+  }
+}
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-text);
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+::selection {
+  background: var(--select);
+  color: var(--ink);
+}
+img,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  text-wrap: balance;
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.04;
+}
+p,
+ul,
+ol,
+dl,
+dd {
+  margin: 0;
+}
+p {
+  text-wrap: pretty;
+}
+figure {
+  margin: 0;
+}
+figcaption {
+  font-family: var(--font-display);
+  font-size: var(--fs-meta);
+  line-height: 1.45;
+  color: var(--ink-3);
+  margin-top: 0.85rem;
+  max-width: 46rem;
+}
+.wrap {
+  width: 100%;
+  max-width: calc(var(--max) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+/* Every composed spread sits on this grid. Phones turn it off, so one rule
+   retires all the column placements at once. */
+.g12 {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gap);
+}
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 30;
+  padding: 0.75rem 1rem;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-display);
+}
+.skip-link:focus {
+  top: 1rem;
+}
+main:focus {
+  outline: none;
+}
+.flip {
+  transform: rotate(180deg);
+}
+
+/* Shared pieces */
+
+/* The person's voice at display size. */
+.voice,
+.machine h2,
+.exp-head h2,
+.handheld h2,
+.turn h2,
+.paradox h2,
+.read-head h1,
+.read-opener h2 {
+  font-family: var(--font-text);
+  font-weight: 380;
+  letter-spacing: -0.028em;
+  line-height: 1.06;
+}
+.statement {
+  font-family: var(--font-text);
+  font-size: var(--fs-d3);
+  line-height: 1.2;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+/* Age is the chronology of the page: a chapter numeral, not a footnote. */
+.age {
+  display: grid;
+  align-content: start;
+  gap: 0.1em;
+  font-family: var(--font-display);
+  color: var(--accent-ink);
+  line-height: 1;
+}
+.age span {
+  font-size: 1rem;
+  font-weight: 650;
+}
+.age b {
+  font-family: var(--font-text);
+  font-size: clamp(3.25rem, 1.6rem + 5vw, 6.5rem);
+  font-weight: 340;
+  letter-spacing: -0.04em;
+  font-variant-numeric: lining-nums;
+  line-height: 0.95;
+}
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3.25rem;
+  padding: 0 1.5rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  transition:
+    background-color 0.25s,
+    color 0.25s;
+}
+.button:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--paper);
+}
+.button-quiet {
+  background: transparent;
+  color: var(--ink);
+}
+.button-on-dark {
+  background: #86d6ae;
+  border-color: #86d6ae;
+  color: #06120c;
+}
+.button-on-dark:hover {
+  background: #eef1ec;
+  border-color: #eef1ec;
+  color: #06120c;
+}
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2.75rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.0625rem;
+  color: var(--accent-ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.3em;
+}
+.text-link svg {
+  width: 1.05em;
+  height: 1.05em;
+  flex: none;
+}
+
+/* A capture is a link to its full-size image. */
+.capture {
+  display: block;
+  position: relative;
+  cursor: zoom-in;
+}
+.capture img {
+  width: 100%;
+}
+.capture-hint {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  background: rgb(8 12 10 / 0.72);
+  color: #f2f4f1;
+  transition: background-color 0.2s;
+}
+.capture-hint svg {
+  width: 1rem;
+  height: 1rem;
+}
+.capture:hover .capture-hint {
+  background: #86d6ae;
+  color: #06120c;
+}
+
+.lightbox {
+  width: 100%;
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: #060908;
+  color: #eef1ec;
+  font-family: var(--font-display);
+}
+.lightbox[open] {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+}
+html:has(.lightbox[open]) {
+  overflow: hidden;
+}
+.lightbox button {
+  min-height: 2.75rem;
+  padding: 0 1rem;
+  border: 1px solid #47544d;
+  border-radius: 999px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+}
+@media (hover: hover) {
+  .lightbox button:hover {
+    background: #eef1ec;
+    border-color: #eef1ec;
+    color: #06120c;
+  }
+}
+.lightbox :focus-visible {
+  outline-color: #86d6ae;
+}
+.lightbox-bar,
+.lightbox-foot {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem 1rem;
+  padding: 0.75rem clamp(0.75rem, 2vw, 1.5rem);
+}
+.lightbox-bar p {
+  margin-right: auto;
+  white-space: nowrap;
+  font-size: var(--fs-meta);
+  font-weight: 650;
+  color: #c6cfc9;
+}
+.lightbox-foot {
+  justify-content: center;
+}
+.lightbox-foot p {
+  flex: 0 1 52rem;
+  font-size: var(--fs-meta);
+  line-height: 1.4;
+  color: #c6cfc9;
+}
+.lightbox-view {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
+  place-items: center;
+  overflow: auto;
+  padding-inline: clamp(0.5rem, 2vw, 1.5rem);
+}
+.lightbox-view img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  border-radius: 6px;
+  cursor: zoom-in;
+}
+.lightbox[data-zoomed] .lightbox-view {
+  place-items: start;
+}
+.lightbox[data-zoomed] .lightbox-view img {
+  max-width: none;
+  max-height: none;
+  width: min(var(--w), 240vw);
+  margin-block: auto;
+  cursor: zoom-out;
+}
+/* A rotated phone gives the height to the image and the caption a side column. */
+@media (max-height: 500px) {
+  .lightbox[open] {
+    grid-template-columns: minmax(0, 1fr) 15rem;
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+  .lightbox-view {
+    grid-area: 1 / 1 / 3 / 2;
+    padding-block: 0.5rem;
+  }
+  .lightbox-bar {
+    flex-wrap: wrap;
+  }
+  .lightbox-bar p {
+    flex-basis: 100%;
+  }
+  .lightbox-foot {
+    flex-wrap: wrap;
+    align-content: start;
+    overflow: auto;
+  }
+  .lightbox-foot p {
+    order: -1;
+    flex-basis: 100%;
+  }
+}
+
+/* Header */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--font-display);
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  min-height: var(--header);
+}
+.wordmark {
+  font-weight: 850;
+  font-size: 1.125rem;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  margin-right: auto;
+}
+.site-header nav {
+  display: flex;
+  gap: 0.25rem;
+}
+.site-header nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink-2);
+  text-decoration: none;
+  border-radius: 999px;
+}
+.site-header nav a:hover {
+  color: var(--ink);
+  background: var(--paper-2);
+}
+.theme-switch {
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+}
+.theme-switch button {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: var(--ink-3);
+  cursor: pointer;
+}
+.theme-switch button:hover {
+  color: var(--ink);
+}
+.theme-switch button[aria-pressed="true"] {
+  background: var(--paper-2);
+  color: var(--accent-ink);
+}
+.theme-switch svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+/* 1. Hero: the headline on paper, the actual console filling the other side. */
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 58fr) minmax(0, 42fr);
+  min-height: calc(100svh - var(--header));
+}
+.hero-copy {
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-block: clamp(1.5rem, 4svh, 3rem);
+  padding-inline: var(--edge) clamp(1.5rem, 3vw, 3rem);
+}
+.hero h1 {
+  /* Sized to the column, capped by height so the actions stay on screen. */
+  font-size: min(15.6cqi, 13.4svh);
+  font-weight: 850;
+  line-height: 1;
+  letter-spacing: -0.042em;
+}
+.hero h1 span,
+.hero h1 em {
+  display: block;
+}
+.hero h1 em {
+  font-family: var(--font-text);
+  font-style: normal;
+  font-weight: 360;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  color: var(--accent-ink);
+  margin-top: 0.08em;
+}
+.hero-lede {
+  margin-top: clamp(1rem, 2.6svh, 1.75rem);
+  font-size: var(--fs-lede);
+  line-height: 1.4;
+  color: var(--ink-2);
+  max-width: 34em;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: clamp(1rem, 2.6svh, 1.75rem);
+}
+.identity {
+  margin-top: clamp(0.85rem, 2svh, 1.25rem);
+  font-family: var(--font-display);
+  font-size: var(--fs-meta);
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--ink-3);
+  text-wrap: balance;
+}
+.hero-photo {
+  position: relative;
+  min-height: 100%;
+  overflow: hidden;
+  background: #b9b6ae;
+}
+.hero-photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 45%;
+}
+.hero-photo figcaption {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  max-width: min(18rem, calc(100% - 2rem));
+  margin: 0;
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  background: rgb(10 16 13 / 0.82);
+  color: #f2f4f1;
+  font-size: var(--fs-meta);
+  line-height: 1.35;
+}
+
+/* 2. The one-minute version: a contents page. */
+.minute {
+  padding-block: var(--space) 0;
+  align-items: start;
+}
+.minute h2 {
+  grid-column: 1 / 5;
+  font-family: var(--font-text);
+  font-weight: 380;
+  font-size: var(--fs-d3);
+  letter-spacing: -0.02em;
+  position: sticky;
+  top: 6rem;
+}
+.minute ol {
+  grid-column: 5 / 13;
+  list-style: none;
+  padding: 0;
+  border-bottom: 1px solid var(--rule);
+}
+.minute li > a,
+.minute-next {
+  display: grid;
+  grid-template-columns: clamp(5rem, 9vw, 9rem) minmax(0, 1fr);
+  gap: 1.5rem;
+  align-items: baseline;
+  padding: clamp(1rem, 1.8vw, 1.5rem) 0;
+  border-top: 1px solid var(--rule);
+  text-decoration: none;
+  font-family: var(--font-display);
+}
+.minute-age {
+  font-family: var(--font-text);
+  font-size: clamp(1.9rem, 1.2rem + 2.4vw, 3.5rem);
+  font-weight: 340;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--accent-ink);
+}
+.minute-text {
+  font-size: var(--fs-title);
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  text-wrap: balance;
+  transition: color 0.3s;
+}
+.minute a:hover .minute-text {
+  color: var(--accent-ink);
+}
+.minute-next .minute-age,
+.minute-next .minute-text {
+  color: var(--ink-3);
+}
+
+/* 3. The machine */
+.machine {
+  padding-block: var(--space) 0;
+  align-items: start;
+}
+.machine .age {
+  grid-column: 1 / 3;
+  grid-row: 1;
+}
+.machine h2 {
+  grid-column: 3 / 13;
+  grid-row: 1;
+  font-size: var(--fs-d1);
+}
+.machine-copy {
+  grid-column: 1 / 6;
+  margin-top: clamp(2.5rem, 5vw, 4.5rem);
+}
+.machine-copy > p:not(.statement) {
+  margin-top: 1.25rem;
+  color: var(--ink-2);
+  max-width: 36rem;
+}
+.machine-copy > p:first-child {
+  margin-top: 0;
+}
+.machine-copy .statement {
+  margin-top: 1.75rem;
+}
+.machine-copy .text-link {
+  margin-top: 1rem;
+}
+.board {
+  grid-column: 6 / 13;
+  margin-top: clamp(2.5rem, 5vw, 4.5rem);
+}
+.board-svg {
+  width: 100%;
+  font-family: var(--font-display);
+}
+.board-ink {
+  stroke: var(--ink-2);
+  stroke-width: 1.4;
+}
+.board-ink .board-accent {
+  stroke: var(--accent);
+  stroke-width: 1.8;
+}
+.board-ink .board-dash {
+  stroke-dasharray: 4 4;
+  stroke: var(--ink-3);
+}
+.board-labels path {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.2;
+}
+.board-labels circle {
+  fill: var(--accent);
+}
+.board-labels text {
+  fill: var(--ink);
+  font-size: 19px;
+  font-weight: 750;
+}
+
+/* 4. Experiments */
+.experiments {
+  padding-block: var(--space);
+}
+.exp-head {
+  align-items: end;
+  margin-bottom: clamp(3rem, 6vw, 5.5rem);
+}
+.exp-head h2 {
+  grid-column: 1 / 9;
+  font-size: var(--fs-d1);
+}
+.exp-head p {
+  grid-column: 9 / 13;
+  font-size: var(--fs-lede);
+  line-height: 1.45;
+  color: var(--ink-2);
+}
+.exp-grid {
+  row-gap: clamp(3rem, 5vw, 4.5rem);
+}
+.exp {
+  border-top: 1px solid var(--ink);
+  padding-top: 1.25rem;
+}
+.exp .age b {
+  font-size: clamp(2.5rem, 1.6rem + 2.4vw, 3.75rem);
+}
+.exp h3 {
+  font-size: var(--fs-title);
+  margin-top: 1rem;
+}
+.exp p:not(.age):not(.statement) {
+  margin-top: 0.75rem;
+  color: var(--ink-2);
+}
+.exp .statement {
+  margin-top: 1.25rem;
+}
+.exp-eth {
+  grid-column: 1 / 7;
+  grid-row: 1 / span 2;
+}
+.exp-eth h3 {
+  font-size: var(--fs-d2);
+  font-weight: 850;
+}
+.exp-eth .age b {
+  font-size: clamp(3.25rem, 1.6rem + 5vw, 6.5rem);
+}
+.exp-yt {
+  grid-column: 7 / 10;
+}
+.exp-aff {
+  grid-column: 10 / 13;
+}
+.exp-py {
+  grid-column: 7 / 13;
+}
+.exp-linux {
+  grid-column: 1 / 13;
+  align-items: start;
+}
+.exp-linux > div {
+  grid-column: 1 / 6;
+}
+.exp-linux h3 {
+  margin-top: 0;
+}
+.distros {
+  grid-column: 6 / 13;
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.05em 0.7em;
+  font-family: var(--font-display);
+  font-size: var(--fs-d3);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+/* 5. The handheld: the one drench. The photo fills its side, edge to edge. */
+.handheld {
+  display: grid;
+  grid-template-columns: minmax(0, 46fr) minmax(0, 54fr);
+  background: var(--board);
+  color: var(--board-ink);
+  --ink: var(--board-ink);
+  --ink-2: var(--board-2);
+  --ink-3: var(--board-2);
+  --accent-ink: var(--board-2);
+  --select: #1f4d3c;
+}
+.handheld-copy {
+  padding-block: var(--space);
+  padding-inline: var(--edge) clamp(2rem, 5vw, 5rem);
+}
+.handheld h2 {
+  font-size: var(--fs-d1);
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+}
+.handheld-copy > p:not(.age):not(.statement) {
+  margin-top: 1.75rem;
+  color: var(--board-2);
+}
+.handheld .statement {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--board-rule);
+}
+/* The photo breaks the top of the band, so the paper runs into the green. */
+.handheld-photo {
+  position: relative;
+  min-height: 34rem;
+  margin-top: calc(-1 * clamp(2rem, 4vw, 4rem));
+  overflow: hidden;
+}
+.handheld-photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 30%;
+}
+.handheld-photo figcaption {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  margin: 0;
+  padding: 0.5rem 0.8rem;
+  border-radius: 8px;
+  background: rgb(10 16 13 / 0.82);
+  color: #f2f4f1;
+  font-size: var(--fs-meta);
+}
+
+/* 6. Turning point */
+.turn {
+  padding-block: var(--space) clamp(3rem, 5vw, 4.5rem);
+  row-gap: clamp(3rem, 6vw, 5rem);
+}
+.turn h2 {
+  grid-column: 1 / 13;
+  font-size: var(--fs-d1);
+  max-width: 17em;
+}
+.turn-note:nth-of-type(1) {
+  grid-column: 4 / 8;
+}
+.turn-note:nth-of-type(2) {
+  grid-column: 8 / 12;
+}
+.turn-note h3 {
+  font-size: var(--fs-title);
+  margin-bottom: 0.85rem;
+}
+.turn-note p {
+  color: var(--ink-2);
+}
+
+/* 7. Agent Orchestrator: a lit panel set into the page, so it holds its edge
+   against either theme. Everything inside is a real capture. */
+.ao {
+  padding-inline: clamp(0.5rem, 1.2vw, 1.25rem);
+  scroll-margin-top: 4.5rem;
+}
+.ao-panel {
+  container-type: inline-size;
+  max-width: calc(var(--max) + 8rem);
+  margin-inline: auto;
+  padding: clamp(2.5rem, 6vw, 6rem) clamp(1.25rem, 4vw, 4.5rem);
+  border: 1px solid var(--screen-rule);
+  border-radius: clamp(16px, 2vw, 28px);
+  background:
+    radial-gradient(90% 46% at 62% 34%, var(--screen-glow), transparent 100%),
+    var(--screen);
+  color: var(--screen-ink);
+  overflow: hidden;
+  --ink: var(--screen-ink);
+  --ink-2: var(--screen-2);
+  --ink-3: var(--screen-2);
+  --rule: var(--screen-rule);
+  --accent-ink: #93dbb7;
+  --accent: #86d6ae;
+  --select: #1f4d3c;
+}
+.ao-head h2 {
+  font-size: 10.1cqi;
+  font-weight: 880;
+  line-height: 1;
+  letter-spacing: -0.045em;
+  white-space: nowrap;
+}
+.ao-sub {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2.2fr);
+  gap: var(--gap);
+  margin-top: clamp(1.25rem, 2.5vw, 2.25rem);
+}
+.ao-when {
+  font-family: var(--font-display);
+  font-weight: 650;
+  font-size: 1.125rem;
+  line-height: 1.35;
+  color: var(--accent-ink);
+}
+.ao-dek {
+  font-size: var(--fs-lede);
+  line-height: 1.42;
+  color: var(--screen-2);
+  max-width: 40rem;
+}
+.ao-stage {
+  margin-top: clamp(2.5rem, 5vw, 4.5rem);
+}
+/* Staggered so nothing covers the agents at work: the plan overlaps only the
+   capture's bottom edge, the panel only its right edge. */
+.ao-collage {
+  position: relative;
+  padding-bottom: 15.5cqi;
+}
+.ao-main {
+  width: 76%;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 0.14);
+  box-shadow:
+    0 2px 6px rgb(0 0 0 / 0.3),
+    0 40px 90px -30px rgb(0 0 0 / 0.75);
+}
+.ao-float {
+  position: absolute;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 0.2);
+  box-shadow:
+    0 2px 6px rgb(0 0 0 / 0.35),
+    0 30px 60px -18px rgb(0 0 0 / 0.8);
+}
+.ao-float-plan {
+  left: 5%;
+  bottom: 0;
+  width: 52%;
+}
+.ao-float-needs {
+  right: 0;
+  top: 2cqi;
+  width: 26%;
+}
+.ao-main .capture-hint {
+  top: auto;
+  right: auto;
+  bottom: 0.6rem;
+  left: 0.6rem;
+}
+.ao-float-needs .capture-hint {
+  top: auto;
+  bottom: 0.6rem;
+}
+.ao-stage figcaption {
+  position: relative;
+  margin-top: 1.5rem;
+  max-width: 54rem;
+  color: var(--screen-2);
+}
+.ao-points {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(2rem, 3.5vw, 3.5rem);
+  margin-top: clamp(3rem, 6vw, 5rem);
+}
+.ao-points > div {
+  border-top: 1px solid var(--screen-rule);
+  padding-top: 1.25rem;
+}
+.ao-points h3 {
+  font-size: var(--fs-title);
+  margin-bottom: 0.75rem;
+}
+.ao-points p {
+  color: var(--screen-2);
+  font-size: var(--fs-small);
+  line-height: 1.55;
+}
+.ao-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem 3rem;
+  margin-top: clamp(2.5rem, 4vw, 3.5rem);
+}
+.ao-foot p {
+  max-width: 40rem;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--screen-ink);
+}
+
+/* 8. Lead Finder: the process is the picture, read left to right. */
+.lead {
+  padding-block: var(--space) 0;
+}
+.lead-head {
+  align-items: start;
+}
+.lead h2 {
+  grid-column: 1 / 8;
+  font-size: var(--fs-d1);
+  font-weight: 860;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+.lead-copy {
+  grid-column: 8 / 13;
+}
+.lead-dek {
+  margin-top: 0.5rem;
+  font-size: var(--fs-lede);
+  line-height: 1.42;
+}
+.lead-copy p:not(.lead-dek) {
+  margin-top: 0.85rem;
+  color: var(--ink-2);
+}
+.lead-copy .text-link {
+  margin-top: 0.75rem;
+}
+/* The track runs up to a person and stops; the only filled step is theirs. */
+.flow {
+  container-type: inline-size;
+  margin-top: clamp(2.5rem, 5vw, 4.5rem);
+}
+.flow-zones {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 1.35fr) minmax(0, 1.55fr);
+  grid-template-rows: repeat(3, auto);
+  column-gap: var(--gap);
+}
+.flow-zone {
+  display: grid;
+  grid-row: span 3;
+  grid-template-rows: subgrid;
+  row-gap: 0;
+}
+.flow-zone h3 {
+  margin-bottom: 0.85rem;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  line-height: 1.3;
+  color: var(--ink-3);
+}
+.flow-zone ol {
+  position: relative;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: var(--gap);
+  list-style: none;
+  padding: 1.1rem 0 0;
+  border-top: 2px solid var(--ink-3);
+  font-family: var(--font-display);
+}
+.flow-zone:first-child ol::after,
+.flow-zone:last-child ol::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  width: var(--gap);
+  border-top: 2px solid var(--ink-3);
+}
+.flow-zone:first-child ol::after {
+  right: calc(-1 * var(--gap));
+}
+.flow-zone:last-child ol::before {
+  left: calc(-1 * var(--gap));
+  border-top-color: var(--accent);
+}
+.flow-zone:last-child ol {
+  border-top-color: var(--accent);
+}
+.flow-zone:last-child h3 {
+  color: var(--accent-ink);
+}
+.flow-zone:nth-child(2) h3 {
+  color: var(--ink);
+}
+.flow-zone:nth-child(2) ol {
+  padding: 1.1rem 1.25rem 1.25rem;
+  border-top: 0;
+  border-radius: var(--radius);
+  background: var(--board);
+  color: var(--board-ink);
+  --accent-ink: var(--board-2);
+  --ink-2: var(--board-2);
+}
+.flow-n {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-family: var(--font-text);
+  font-size: 1.75rem;
+  line-height: 1.1;
+  color: var(--accent-ink);
+}
+.flow li strong {
+  display: block;
+  font-size: 1.1875rem;
+  font-weight: 750;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+.flow li span:last-child {
+  display: block;
+  margin-top: 0.3rem;
+  font-family: var(--font-text);
+  font-size: var(--fs-small);
+  line-height: 1.42;
+  color: var(--ink-2);
+}
+.flow-guard {
+  margin-top: 1.25rem;
+  padding-top: 0.85rem;
+  border-top: 1px dashed var(--rule);
+  font-size: var(--fs-small);
+  line-height: 1.42;
+  color: var(--ink-2);
+}
+.flow-guard strong {
+  font-family: var(--font-display);
+  font-weight: 750;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.flow figcaption {
+  margin-top: 1.5rem;
+}
+.case-sec .flow {
+  margin-top: 0;
+}
+/* Narrower, the research keeps its row and the decision sits under it. */
+@container (max-width: 64rem) {
+  .flow-zones {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(6, auto);
+  }
+  .flow-zone:first-child {
+    grid-column: 1 / -1;
+  }
+  .flow-zone:not(:first-child) {
+    margin-top: 2rem;
+  }
+  .flow-zone:first-child ol::after,
+  .flow-zone:last-child ol::before {
+    display: none;
+  }
+}
+/* On a phone the track turns and runs down the page. */
+@container (max-width: 40rem) {
+  .flow-zones {
+    display: block;
+  }
+  .flow-zone ol {
+    grid-auto-flow: row;
+    gap: 1.25rem;
+    padding: 0 0 0 1.25rem;
+    border-top: 0;
+    border-left: 2px solid var(--ink-3);
+  }
+  .flow-zone:last-child ol {
+    border-left-color: var(--accent);
+  }
+  .flow-zone:nth-child(2) ol {
+    padding: 1.1rem 1.25rem 1.25rem;
+    border-left: 0;
+  }
+}
+
+/* Steps: numbered, because they are a process in order. */
+.pipeline ol {
+  list-style: none;
+  padding: 0;
+  counter-reset: step;
+  border-bottom: 1px solid var(--rule);
+}
+.pipeline li {
+  counter-increment: step;
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr);
+  column-gap: 1rem;
+  padding: 1rem 0;
+  border-top: 1px solid var(--rule);
+  font-family: var(--font-display);
+}
+.pipeline li::before {
+  content: counter(step);
+  grid-row: 1 / span 2;
+  font-family: var(--font-text);
+  font-weight: 400;
+  font-size: 1.75rem;
+  color: var(--accent-ink);
+  line-height: 1.1;
+}
+.pipeline strong {
+  font-size: 1.125rem;
+  font-weight: 750;
+  letter-spacing: -0.01em;
+}
+.pipeline span {
+  font-family: var(--font-text);
+  font-size: var(--fs-small);
+  color: var(--ink-2);
+}
+
+/* 9. Kramiva */
+.kramiva {
+  padding-block: var(--space) 0;
+  align-items: end;
+}
+.kramiva h2 {
+  grid-column: 1 / 8;
+  font-size: var(--fs-d1);
+  font-weight: 860;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+.kramiva h2 span {
+  display: block;
+  color: var(--ink-3);
+  font-weight: 650;
+}
+.kramiva > div {
+  grid-column: 8 / 13;
+}
+.kramiva .statement {
+  margin-bottom: 1rem;
+}
+.kramiva > div > p:not(.statement) {
+  color: var(--ink-2);
+}
+.kramiva .text-link {
+  margin-top: 0.75rem;
+}
+
+/* 10. Other builds */
+.built {
+  padding-block: var(--space);
+}
+.built > h2 {
+  font-family: var(--font-text);
+  font-weight: 380;
+  font-size: var(--fs-d2);
+  letter-spacing: -0.025em;
+  margin-bottom: clamp(2rem, 4vw, 3.5rem);
+}
+.built-grid {
+  row-gap: clamp(3rem, 5vw, 4.5rem);
+}
+/* Rows of media share a height; rows of text share a baseline. */
+.tile {
+  display: grid;
+  grid-row: span 2;
+  grid-template-rows: subgrid;
+  row-gap: 1.1rem;
+  text-decoration: none;
+}
+.tile-kairyo {
+  grid-column: 1 / 8;
+}
+.tile-enviro {
+  grid-column: 8 / 13;
+}
+.tile-nudge {
+  grid-column: 1 / 6;
+}
+.tile-riscv {
+  grid-column: 6 / 13;
+}
+.tile-small {
+  grid-column: span 6;
+  border-top: 1px solid var(--rule);
+  padding-top: 1.25rem;
+  row-gap: 0.4rem;
+}
+.tile-media {
+  display: block;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--paper-2);
+}
+.tile-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top left;
+  transition: scale 0.6s var(--ease-out);
+}
+a.tile:hover .tile-media img {
+  scale: 1.02;
+}
+.tile-diagram {
+  display: grid;
+  align-items: center;
+  padding: clamp(1rem, 2.5vw, 2rem);
+}
+.d-scroll:focus-visible {
+  outline-offset: 2px;
+}
+.d-hint {
+  display: none;
+}
+.tile-quote {
+  display: grid;
+  align-content: center;
+  gap: 1.25rem;
+  min-height: 15rem;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+}
+.msg {
+  font-family: var(--font-text);
+  font-size: var(--fs-d3);
+  line-height: 1.2;
+}
+.msg-out {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--accent-ink);
+}
+.tile-text {
+  display: grid;
+  gap: 0.4rem;
+  align-content: start;
+}
+.tile-text a {
+  width: fit-content;
+  text-decoration: none;
+}
+.tile strong {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-display);
+  font-size: var(--fs-title);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  transition: color 0.3s;
+}
+.tile strong svg {
+  width: 0.8em;
+  height: 0.8em;
+}
+a.tile:hover strong,
+.tile-text a:hover strong {
+  color: var(--accent-ink);
+}
+.tile-text > span:not(.state),
+.tile-small > span {
+  color: var(--ink-2);
+  max-width: 40rem;
+}
+.state {
+  font-family: var(--font-display);
+  font-size: var(--fs-meta);
+  font-weight: 600;
+  color: var(--ink-3);
+}
+.only-dark {
+  display: none;
+}
+:root[data-theme="dark"] .only-dark {
+  display: block;
+}
+:root[data-theme="dark"] .only-light {
+  display: none;
+}
+
+/* Diagrams drawn from source */
+.diagram {
+  width: 100%;
+  font-family: var(--font-display);
+}
+.d-wire {
+  fill: none;
+  stroke: var(--ink-3);
+  stroke-width: 1.4;
+}
+.d-head {
+  fill: var(--ink-3);
+}
+.d-box rect,
+.d-box path {
+  fill: var(--paper);
+  stroke: var(--ink-2);
+  stroke-width: 1.4;
+}
+.d-box .d-accent {
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+.d-label text {
+  fill: var(--ink);
+  font-size: 16px;
+  font-weight: 700;
+}
+.d-label .d-note {
+  fill: var(--ink-3);
+  font-weight: 600;
+}
+
+/* 11. The automation paradox */
+.paradox {
+  padding-block: 0 var(--space);
+  row-gap: clamp(2.5rem, 5vw, 4rem);
+  align-items: start;
+}
+.paradox h2 {
+  grid-column: 1 / 13;
+  font-size: var(--fs-d1);
+  max-width: 15em;
+}
+.paradox-text {
+  grid-column: 1 / 6;
+  font-size: var(--fs-lede);
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+.loop {
+  grid-column: 7 / 13;
+  display: grid;
+  font-family: var(--font-display);
+  font-size: var(--fs-d2);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.12;
+}
+.loop s {
+  color: var(--ink-3);
+  text-decoration-thickness: 0.09em;
+  text-decoration-color: var(--accent);
+}
+.loop-again {
+  color: var(--accent-ink);
+}
+
+/* 12. The close opens like the hero, in both voices, and runs into the footer. */
+.closing,
+main:has(.closing) ~ .site-footer {
+  background: var(--screen);
+  color: var(--screen-ink);
+  --ink: var(--screen-ink);
+  --ink-2: var(--screen-2);
+  --ink-3: var(--screen-2);
+  --rule: var(--screen-rule);
+  --accent-ink: #93dbb7;
+  --accent: #86d6ae;
+  --select: #1f4d3c;
+}
+.closing {
+  padding-block: var(--space) clamp(3rem, 6vw, 5rem);
+}
+.closing-grid {
+  align-items: start;
+}
+.closing h2 {
+  grid-column: 1 / 13;
+  font-size: var(--fs-d1);
+  font-weight: 850;
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+  margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
+}
+.closing h2 span,
+.closing h2 em {
+  display: block;
+}
+.closing h2 em {
+  font-family: var(--font-text);
+  font-style: normal;
+  font-weight: 360;
+  letter-spacing: -0.03em;
+  color: var(--accent-ink);
+  margin-top: 0.08em;
+}
+.closing-photo {
+  grid-column: 1 / 5;
+}
+.closing-photo img {
+  width: 100%;
+  border-radius: var(--radius);
+}
+.closing-copy {
+  grid-column: 5 / 13;
+  padding-left: clamp(0rem, 3vw, 3rem);
+}
+.closing-two {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gap);
+}
+.closing-two h3 {
+  padding-top: 0.85rem;
+  margin-bottom: 0.65rem;
+  border-top: 1px solid var(--screen-rule);
+  font-size: 1.125rem;
+  font-weight: 750;
+  letter-spacing: -0.01em;
+}
+.closing-two p {
+  color: var(--screen-2);
+}
+.closing-copy .statement {
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+.closing-contact {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.75rem;
+  margin-top: 2rem;
+  font-family: var(--font-display);
+}
+.email-link {
+  font-size: var(--fs-title);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--accent-ink);
+  text-decoration-thickness: 2px;
+  min-height: 2.75rem;
+  display: inline-flex;
+  align-items: center;
+  overflow-wrap: anywhere;
+}
+.copy-email {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.copy-email button {
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  min-height: 2.75rem;
+  padding: 0 1.1rem;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+}
+.copy-email button:hover {
+  border-color: var(--ink-3);
+}
+.copy-email [role="status"] {
+  font-size: var(--fs-meta);
+  color: var(--ink-3);
+}
+
+/* Footer */
+.site-footer {
+  border-top: 1px solid var(--rule);
+  font-family: var(--font-display);
+  font-size: var(--fs-meta);
+  color: var(--ink-3);
+}
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 2rem;
+  align-items: center;
+  min-height: 5rem;
+}
+.footer-inner span {
+  margin-right: auto;
+}
+.footer-inner a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 2.75rem;
+  color: var(--ink-2);
+}
+.footer-inner svg {
+  width: 1em;
+  height: 1em;
+}
+
+/* The long version (/story/): a magazine feature. */
+.read {
+  padding-bottom: var(--space);
+}
+.read-head {
+  row-gap: clamp(2rem, 4vw, 3.5rem);
+  align-items: end;
+  padding-block: clamp(2.5rem, 6vw, 5.5rem) var(--space);
+}
+.read-head h1 {
+  grid-column: 1 / 13;
+  font-size: clamp(3rem, 0.8rem + 8.6vw, 10rem);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  max-width: 12.5em;
+}
+.read-portrait {
+  grid-column: 1 / 5;
+}
+.read-portrait img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  object-position: 50% 42%;
+  border-radius: var(--radius);
+}
+.read-intro {
+  grid-column: 5 / 12;
+  padding-left: clamp(0rem, 3vw, 3rem);
+}
+.read-dek {
+  font-size: var(--fs-d3);
+  line-height: 1.22;
+  letter-spacing: -0.012em;
+  color: var(--ink);
+}
+.read-toc {
+  list-style: none;
+  padding: 0;
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--font-display);
+}
+.read-toc a {
+  display: flex;
+  gap: 1rem;
+  align-items: baseline;
+  min-height: 2.75rem;
+  padding-block: 0.55rem;
+  border-top: 1px solid var(--rule);
+  font-weight: 650;
+  font-size: 1.0625rem;
+  text-decoration: none;
+}
+.read-toc a:hover {
+  color: var(--accent-ink);
+}
+.read-toc span {
+  font-family: var(--font-text);
+  font-weight: 400;
+  color: var(--accent-ink);
+  min-width: 1.25rem;
+}
+.read-opener {
+  background: var(--paper-2);
+  padding-block: clamp(3rem, 7vw, 6.5rem);
+}
+.read-opener .g12 {
+  align-items: baseline;
+}
+.read-opener p {
+  grid-column: 1 / 4;
+  font-family: var(--font-text);
+  font-size: var(--fs-d1);
+  font-weight: 340;
+  line-height: 1;
+  color: var(--accent-ink);
+}
+.read-opener h2 {
+  grid-column: 4 / 13;
+  font-size: var(--fs-d1);
+}
+.read-chapter {
+  padding-top: clamp(3.5rem, 6vw, 5.5rem);
+  scroll-margin-top: 3rem;
+}
+.read-opener + .read-chapter {
+  padding-top: clamp(3.5rem, 6vw, 5.5rem);
+}
+.read-age {
+  grid-column: 1 / 4;
+  align-self: start;
+  position: sticky;
+  top: 5.75rem;
+  font-family: var(--font-text);
+  font-size: clamp(2.5rem, 1.5rem + 3.4vw, 5rem);
+  font-weight: 340;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  color: var(--accent-ink);
+}
+.read-body {
+  grid-column: 4 / 10;
+}
+.read-body h3 {
+  font-size: var(--fs-title);
+  margin-bottom: 1.1rem;
+}
+.read-body p {
+  font-size: clamp(1.1875rem, 1.1rem + 0.3vw, 1.3125rem);
+  line-height: 1.66;
+}
+.read-body p + p {
+  margin-top: 1em;
+}
+/* A drop cap opens each part. */
+.read-opener + .read-chapter .read-body > p:first-of-type::first-letter {
+  float: left;
+  font-size: 4.3em;
+  line-height: 0.82;
+  padding: 0.07em 0.08em 0 0;
+  font-weight: 400;
+  color: var(--accent-ink);
+}
+/* Pull quotes break out of the measure. */
+.read-body blockquote {
+  width: min(150%, 100cqi);
+  margin: clamp(2.5rem, 5vw, 4rem) 0;
+  font-size: var(--fs-d2);
+  font-weight: 380;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+}
+.read-body .text-link {
+  margin-top: 1rem;
+}
+.read-wide {
+  margin-top: clamp(3rem, 6vw, 5rem);
+}
+.read-wide .board {
+  margin: 0 0 0 auto;
+  width: min(100%, 60rem);
+}
+.read-figure {
+  margin-top: clamp(3.5rem, 7vw, 6rem);
+}
+.read-figure img {
+  width: 100%;
+}
+.read-figure figcaption {
+  padding-inline: var(--edge);
+}
+.read-end {
+  margin-top: var(--space);
+  display: grid;
+  justify-items: start;
+  gap: 0.5rem;
+}
+.read-end p {
+  font-size: var(--fs-d2);
+  font-weight: 380;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  margin-bottom: 1.5rem;
+  max-width: 17em;
+}
+
+/* Case studies */
+.case {
+  padding-bottom: var(--space);
+}
+.case-head {
+  padding-block: clamp(1.5rem, 4vw, 3rem) clamp(2.5rem, 5vw, 4rem);
+}
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--ink-2);
+  text-decoration: none;
+}
+.back-link svg {
+  width: 1rem;
+  height: 1rem;
+}
+.case-head h1 {
+  margin-top: clamp(1.25rem, 3vw, 2.5rem);
+  font-size: clamp(2.5rem, 0.5rem + 8.4vw, 9rem);
+  line-height: 1;
+  letter-spacing: -0.045em;
+  font-weight: 880;
+}
+.case-dek {
+  margin-top: clamp(1.25rem, 2.5vw, 2rem);
+  max-width: 40rem;
+  font-size: var(--fs-d3);
+  line-height: 1.2;
+  letter-spacing: -0.012em;
+  color: var(--ink-2);
+}
+.case-facts {
+  display: grid;
+  grid-template-columns: 2fr 1.2fr 1fr;
+  gap: 1.5rem clamp(1.5rem, 3vw, 3rem);
+  margin-top: clamp(2rem, 4vw, 3rem);
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule);
+  font-family: var(--font-display);
+}
+.case-facts dt {
+  font-size: var(--fs-meta);
+  font-weight: 700;
+  color: var(--ink-3);
+  margin-bottom: 0.4rem;
+}
+.case-facts dd {
+  font-size: 1.0625rem;
+  line-height: 1.45;
+}
+.case-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 2rem;
+  margin-top: 1.5rem;
+}
+/* Same lit stage as the home page, so dark captures keep their edges. */
+.stage-shot .capture-hint {
+  top: auto;
+  right: auto;
+  bottom: 0.6rem;
+  left: 0.6rem;
+}
+.case-stage {
+  margin-inline: clamp(0.5rem, 1.2vw, 1.25rem);
+  padding-block: clamp(1.5rem, 5vw, 4.5rem);
+  border: 1px solid var(--screen-rule);
+  border-radius: clamp(16px, 2vw, 28px);
+  background:
+    radial-gradient(80% 60% at 50% 40%, var(--screen-glow), transparent 100%),
+    var(--screen);
+}
+.stage-shot figcaption {
+  color: var(--screen-2);
+}
+.stage-shot img {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid rgb(255 255 255 / 0.14);
+  box-shadow:
+    0 2px 6px rgb(0 0 0 / 0.3),
+    0 40px 90px -30px rgb(0 0 0 / 0.75);
+}
+.case-visual-panel {
+  padding: clamp(1.5rem, 4vw, 3.5rem);
+  border-radius: var(--radius);
+  background: var(--paper-2);
+}
+.case-visual-panel .diagram {
+  max-width: 44rem;
+  margin-inline: auto;
+}
+.case-message {
+  display: grid;
+  gap: 1.25rem;
+}
+.case-message .msg {
+  font-size: var(--fs-d2);
+  letter-spacing: -0.02em;
+}
+.case-body > * {
+  margin-top: clamp(3.5rem, 7vw, 6rem);
+}
+/* Section name in the margin, content in the wide column. */
+.case-sec {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gap);
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--ink);
+}
+.case-sec > h2 {
+  grid-column: 1 / 4;
+  font-size: var(--fs-title);
+  font-weight: 750;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+.case-sec > :not(h2) {
+  grid-column: 4 / 13;
+}
+.case-lede {
+  font-size: clamp(1.375rem, 1.2rem + 0.7vw, 1.875rem);
+  line-height: 1.32;
+  letter-spacing: -0.01em;
+  max-width: 46rem;
+}
+.case-sec > div > p:not(.case-lede):not(:only-child) {
+  margin-top: 1em;
+  color: var(--ink-2);
+  max-width: 44rem;
+}
+.decisions {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(2.25rem, 4vw, 3.25rem) clamp(2rem, 4vw, 4rem);
+}
+.decisions h3 {
+  font-size: 1.375rem;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 0.65rem;
+}
+.decisions p {
+  color: var(--ink-2);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+}
+.case-shots {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(2rem, 3vw, 3rem);
+  align-items: start;
+}
+.case-shots-1 {
+  grid-template-columns: minmax(0, 1fr);
+}
+.case-shots-4 .case-shot:first-child {
+  grid-row: span 2;
+}
+.case-shots-4 .case-shot:last-child {
+  grid-column: 1 / -1;
+}
+.case-shot img {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid var(--rule);
+}
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+.status-grid h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.65rem;
+}
+.status-grid p {
+  color: var(--ink-2);
+}
+.case-lesson {
+  font-size: var(--fs-d3);
+  line-height: 1.24;
+  letter-spacing: -0.012em;
+  max-width: 46rem;
+}
+.next-case {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: var(--space);
+  text-decoration: none;
+  font-family: var(--font-display);
+}
+.next-label {
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--ink);
+  font-size: var(--fs-meta);
+  font-weight: 700;
+  color: var(--ink-3);
+}
+.next-case strong {
+  font-size: var(--fs-d1);
+  font-weight: 880;
+  letter-spacing: -0.04em;
+  line-height: 1.04;
+  transition: color 0.25s;
+}
+.next-case:hover strong {
+  color: var(--accent-ink);
+}
+.next-case > span:last-child {
+  font-family: var(--font-text);
+  color: var(--ink-2);
+}
+
+/* Kairyo before/after */
+.comparison-images {
+  position: relative;
+  max-width: 56rem;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.comparison-images img {
+  width: 100%;
+}
+.comparison-after {
+  position: absolute;
+  inset: 0;
+}
+.comparison-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.3);
+}
+.comparison-label {
+  position: absolute;
+  bottom: 0.75rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  background: rgb(0 0 0 / 0.7);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+.label-after {
+  left: 0.75rem;
+}
+.label-before {
+  right: 0.75rem;
+}
+.comparison-control {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  max-width: 56rem;
+  margin-top: 1rem;
+  font-family: var(--font-display);
+  font-size: 1rem;
+}
+.comparison-control input {
+  flex: 1;
+  min-height: 2.75rem;
+}
+.comparison-control output {
+  min-width: 3rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-3);
+}
+
+.missing {
+  min-height: 60vh;
+  padding-block: var(--space);
+}
+.missing h1 {
+  font-size: var(--fs-d1);
+  max-width: 16ch;
+  margin-bottom: 2rem;
+}
+
+/* Motion. One orchestrated entrance on the home page, then scroll answers:
+   the AO windows settle, "Relax." gets crossed out, the story keeps your place. */
+@media (prefers-reduced-motion: no-preference) {
+  .hero h1 span,
+  .hero h1 em,
+  .hero-lede,
+  .hero .actions,
+  .identity {
+    animation: rise 0.9s var(--ease-out) both;
+  }
+  .hero h1 em {
+    animation-delay: 0.12s;
+  }
+  .hero-lede,
+  .hero .actions,
+  .identity {
+    animation-delay: 0.28s;
+  }
+  .hero-photo img {
+    animation: settle 1.4s var(--ease-out) both;
+  }
+  @supports (animation-timeline: view()) {
+    .ao-main,
+    .ao-float {
+      animation: lift linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 34%;
+    }
+    .ao-float-plan {
+      --from: 3.5rem;
+    }
+    .ao-float-needs {
+      --from: 5.5rem;
+    }
+    .loop s {
+      text-decoration-color: transparent;
+      animation: strike linear both;
+      animation-timeline: view();
+      animation-range: entry 70% cover 46%;
+    }
+    .read-progress {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 25;
+      height: 3px;
+      background: var(--accent);
+      transform-origin: left;
+      animation: progress linear both;
+      animation-timeline: scroll(root);
+    }
+  }
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    translate: 0 0.4em;
+  }
+}
+@keyframes settle {
+  from {
+    scale: 1.06;
+  }
+}
+@keyframes lift {
+  from {
+    translate: 0 var(--from, 2rem);
+    opacity: 0.6;
+  }
+}
+@keyframes strike {
+  to {
+    text-decoration-color: var(--accent);
+  }
+}
+@keyframes progress {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+/* Very large desktop: wider composition, not wider prose. */
+@media (min-width: 1700px) {
+  :root {
+    --max: 104rem;
+  }
+}
+
+/* Tablet */
+@media (max-width: 1100px) {
+  .machine-copy {
+    grid-column: 1 / 13;
+  }
+  .board {
+    grid-column: 1 / 13;
+    max-width: 44rem;
+  }
+  .exp-head h2,
+  .exp-head p {
+    grid-column: 1 / 13;
+  }
+  .exp-head p {
+    margin-top: 1.25rem;
+    max-width: 38rem;
+  }
+  .exp-eth {
+    grid-column: 1 / 13;
+    grid-row: auto;
+  }
+  .exp-yt,
+  .exp-aff {
+    grid-column: span 6;
+    grid-row: auto;
+  }
+  .exp-py {
+    grid-column: 1 / 13;
+    grid-row: auto;
+  }
+  .exp-linux > div,
+  .distros {
+    grid-column: 1 / 13;
+  }
+  .distros {
+    margin-top: 1.25rem;
+  }
+  .handheld {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .handheld-copy {
+    padding-block: var(--space) clamp(3rem, 6vw, 4rem);
+    padding-inline: var(--gutter);
+  }
+  .handheld-photo {
+    min-height: 0;
+    margin-top: 0;
+    aspect-ratio: 4 / 3;
+  }
+  .turn-note:nth-of-type(1) {
+    grid-column: 1 / 7;
+  }
+  .turn-note:nth-of-type(2) {
+    grid-column: 7 / 13;
+  }
+  .ao-points {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 40rem;
+  }
+  .lead h2,
+  .lead-copy {
+    grid-column: 1 / 13;
+  }
+  .lead-copy {
+    margin-top: 1.5rem;
+    max-width: 38rem;
+  }
+  .kramiva h2,
+  .kramiva > div {
+    grid-column: 1 / 13;
+  }
+  .kramiva > div {
+    margin-top: 2rem;
+    max-width: 38rem;
+  }
+  .ao-float .capture-hint {
+    top: 0.3rem;
+    right: 0.3rem;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  .ao-float .capture-hint svg {
+    width: 0.75rem;
+    height: 0.75rem;
+  }
+  .ao-float-needs .capture-hint {
+    top: auto;
+    bottom: 0.3rem;
+  }
+  .tile-kairyo,
+  .tile-riscv,
+  .tile-enviro,
+  .tile-nudge {
+    grid-column: 1 / 13;
+  }
+  .tile-quote {
+    min-height: 12rem;
+  }
+  .paradox-text,
+  .loop {
+    grid-column: 1 / 13;
+  }
+  .closing-two {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.75rem;
+  }
+  .read-body {
+    grid-column: 3 / 12;
+  }
+  .read-age {
+    grid-column: 1 / 3;
+    font-size: 2.25rem;
+  }
+  .read-body blockquote {
+    width: 100%;
+  }
+  .read-opener p {
+    grid-column: 1 / 3;
+  }
+  .read-opener h2 {
+    grid-column: 3 / 13;
+  }
+  .decisions {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .case-sec > h2 {
+    grid-column: 1 / 13;
+    margin-bottom: 1.5rem;
+  }
+  .case-sec > :not(h2) {
+    grid-column: 1 / 13;
+  }
+}
+
+/* Portrait tablets: a side panel would crop the console, so it runs full width. */
+@media (min-width: 761px) and (max-width: 1100px) and (orientation: portrait) {
+  .hero {
+    display: block;
+    min-height: 0;
+  }
+  .hero-copy {
+    padding-block: clamp(2rem, 5vw, 3.5rem);
+    padding-inline: var(--gutter);
+  }
+  .hero-photo {
+    min-height: 0;
+    aspect-ratio: 4 / 5;
+  }
+}
+
+/* Phones: one column, composed for the narrow screen. */
+@media (max-width: 760px) {
+  :root {
+    --header: 3.5rem;
+  }
+  .g12 {
+    display: block;
+  }
+  .site-header {
+    position: static;
+  }
+  .header-inner {
+    flex-wrap: wrap;
+    gap: 0;
+    padding-top: 0.35rem;
+  }
+  .theme-switch button {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+  .site-header nav {
+    order: 3;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 0.35rem;
+    border-top: 1px solid var(--rule);
+  }
+  .site-header nav a {
+    padding: 0 0.4rem;
+    font-size: 0.9375rem;
+  }
+  .hero {
+    display: block;
+    min-height: 0;
+  }
+  .hero-copy {
+    padding: 1.5rem var(--gutter) 2rem;
+  }
+  .hero h1 {
+    font-size: 15.6cqi;
+  }
+  .actions {
+    gap: 0.5rem;
+  }
+  .actions .button {
+    flex: 1 1 auto;
+    padding-inline: 0.9rem;
+    min-height: 3rem;
+  }
+  /* On phones captions leave the photos and sit below them. */
+  .hero-photo,
+  .handheld-photo {
+    min-height: 0;
+    background: none;
+  }
+  .hero-photo img,
+  .handheld-photo img {
+    position: static;
+    height: auto;
+  }
+  .hero-photo img {
+    aspect-ratio: 4 / 5;
+  }
+  .hero-photo figcaption,
+  .handheld-photo figcaption {
+    position: static;
+    max-width: none;
+    padding: 0.75rem var(--gutter) 0;
+    background: none;
+    color: var(--ink-3);
+    font-size: var(--fs-meta);
+    border-radius: 0;
+  }
+  .handheld-photo figcaption {
+    padding-bottom: 1.25rem;
+  }
+  .minute h2 {
+    position: static;
+    margin-bottom: 1.5rem;
+  }
+  .minute li > a,
+  .minute-next {
+    grid-template-columns: 4.25rem minmax(0, 1fr);
+    gap: 1rem;
+  }
+  .minute-age {
+    font-size: 1.875rem;
+  }
+  .minute-text {
+    font-size: 1.1875rem;
+  }
+  .machine h2 {
+    margin-top: 0.75rem;
+  }
+  .board-labels text {
+    font-size: 24px;
+  }
+  .exp-head p {
+    margin-top: 1.25rem;
+  }
+  .exp {
+    margin-top: 2.75rem;
+  }
+  .exp:first-child {
+    margin-top: 0;
+  }
+  .exp-py {
+    display: block;
+  }
+  .handheld-photo {
+    aspect-ratio: auto;
+  }
+  .handheld-photo img {
+    aspect-ratio: 1;
+  }
+  .turn-note {
+    margin-top: 2.5rem;
+  }
+  .ao-head h2 {
+    font-size: 16.4cqi;
+    white-space: normal;
+    line-height: 1.02;
+  }
+  .ao-sub {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .ao-panel {
+    padding-inline: 1rem;
+  }
+  /* Phones lead with the capture that reads at this size. The others are
+     zoomed crops, and the whole of each is one tap away. */
+  .ao-collage {
+    display: grid;
+    gap: 1rem;
+    padding-bottom: 0;
+  }
+  .ao-main {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+  }
+  .ao-main img {
+    width: 300%;
+    max-width: none;
+    translate: -66.67% 0;
+  }
+  .ao-main .capture-hint {
+    right: 0.6rem;
+    left: auto;
+  }
+  .ao-float {
+    position: relative;
+    inset: auto;
+    width: 100%;
+  }
+  .ao-float-needs {
+    order: -1;
+  }
+  .ao-float-plan img {
+    width: 165%;
+    max-width: none;
+  }
+  .ao-foot .button {
+    width: 100%;
+  }
+  .footer-inner {
+    padding-block: 0.75rem;
+  }
+  .lightbox-foot {
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .lightbox-foot p {
+    order: -1;
+    flex-basis: 100%;
+  }
+  .lead-copy {
+    margin-top: 1.5rem;
+  }
+  .kramiva > div {
+    margin-top: 1.75rem;
+  }
+  .tile {
+    display: grid;
+    grid-template-rows: auto;
+    margin-top: 3rem;
+  }
+  .tile:first-child {
+    margin-top: 0;
+  }
+  .tile-small {
+    margin-top: 2rem;
+  }
+  .d-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .d-scroll .diagram {
+    width: 40rem;
+    max-width: none;
+  }
+  .d-hint {
+    display: block;
+  }
+  .paradox-text {
+    margin-top: 2rem;
+  }
+  .loop {
+    margin-top: 2rem;
+  }
+  .closing-photo {
+    max-width: 12rem;
+    margin-bottom: 2rem;
+  }
+  .closing-copy {
+    padding-left: 0;
+  }
+  .read-portrait {
+    max-width: 16rem;
+    margin-top: 2rem;
+  }
+  .read-intro {
+    margin-top: 2rem;
+    padding-left: 0;
+  }
+  .read-opener p {
+    margin-bottom: 0.25rem;
+  }
+  .read-age {
+    position: static;
+    margin-bottom: 0.5rem;
+    font-size: 2.75rem;
+  }
+  .read-figure figcaption {
+    padding-inline: var(--gutter);
+  }
+  .read-figure img {
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+  .case-facts {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.1rem;
+  }
+  .case-shots {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .case-shots-4 .case-shot:first-child {
+    grid-row: auto;
+  }
+}
+
+@media (max-width: 360px) {
+  .site-header nav a {
+    padding: 0 0.15rem;
+    white-space: nowrap;
+  }
+}
+
+/* Short phones: the actions still land on the first screen. */
+@media (max-width: 760px) and (max-height: 620px) {
+  .hero-copy {
+    padding-top: 1rem;
+  }
+  .hero h1 {
+    font-size: 14.6cqi;
+  }
+  .hero-lede {
+    margin-top: 0.75rem;
+    font-size: 1.0625rem;
+  }
+  .actions {
+    margin-top: 0.75rem;
+  }
+  .actions .button {
+    min-height: 2.75rem;
+  }
+}
