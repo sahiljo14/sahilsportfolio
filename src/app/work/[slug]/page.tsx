@@ -7,6 +7,7 @@ import { LeadFlow } from "@/components/lead-flow";
 import { Lightbox } from "@/components/lightbox";
 import { Pipeline } from "@/components/pipeline";
 import { Shot } from "@/components/shot";
+import { VideoDemo } from "@/components/video-demo";
 import { asset, site, socialImage } from "@/data/profile";
 import { projects } from "@/data/projects";
 
@@ -90,14 +91,30 @@ export default async function CaseStudy({
           <figcaption>Illustration of the data path, drawn from the repository.</figcaption>
         </figure>
       ) : null}
-      {slug === "nudge" ? (
-        <figure className="case-visual wrap">
-          <div className="case-visual-panel case-message">
-            <span className="msg">“kal submit karna hai DBMS assignment”</span>
-            <span className="msg-out">a task, due tomorrow (“kal”)</span>
+      {project.video ? (
+        <section className="case-stage" aria-labelledby="demo">
+          <div className="demo wrap">
+            <VideoDemo video={project.video} />
+            <div className="demo-copy">
+              <h2 id="demo">The demo</h2>
+              <ol className="demo-moments">
+                {project.video.moments.map((moment) => (
+                  <li key={moment.at}>
+                    <span className="demo-at">{moment.at}</span>
+                    <div>
+                      <h3>{moment.title}</h3>
+                      <p>{moment.text}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+              <p className="demo-note">{project.video.note}</p>
+              <a className="text-link" href={project.video.url}>
+                Watch on YouTube <ArrowUpRight />
+              </a>
+            </div>
           </div>
-          <figcaption>Illustration of what the parser does, not a screenshot of the app.</figcaption>
-        </figure>
+        </section>
       ) : null}
 
       <div className="case-body wrap">

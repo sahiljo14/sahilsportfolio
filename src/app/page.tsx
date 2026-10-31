@@ -389,14 +389,19 @@ export default function Home() {
             </span>
           </a>
           <a className="tile tile-nudge" href={asset("/work/nudge/")}>
-            <span className="tile-media tile-quote">
-              <span className="msg">“kal submit karna hai DBMS assignment”</span>
-              <span className="msg-out">a task, due tomorrow (“kal”)</span>
+            <span className="tile-media tile-video">
+              <Img
+                src="/images/nudge-demo.webp"
+                alt="Nudge on an Android phone, splitting one typed message into two tasks."
+                w={1080}
+                h={1920}
+                sizes="(max-width: 760px) 100vw, 40vw"
+              />
             </span>
             <span className="tile-text">
               <strong>Nudge</strong>
-              <span>Finds the deadline buried in an English, Hinglish or Marathi message and keeps it as a task. Flutter, on-device.</span>
-              <span className="state">In progress, with a teammate</span>
+              <span>Finds the deadline buried in an English, Hinglish or Marathi message and keeps it as a task. An on-device Android app in Flutter.</span>
+              <span className="state">In closed testing on Google Play, with a teammate</span>
             </span>
           </a>
           <div className="tile tile-riscv">

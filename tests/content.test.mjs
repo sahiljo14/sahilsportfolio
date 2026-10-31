@@ -10,6 +10,7 @@ const states = [
   "Public release",
   "Public code",
   "In progress",
+  "Closed testing on Google Play",
 ];
 
 test("Every case study has evidence, unique routing, and usable content", () => {
@@ -60,6 +61,7 @@ test("Public content keeps private, confidential and upstream names out", (t) =>
     assert.match(projects.find((p) => p.slug === slug).role, /teammate/);
   assert.doesNotMatch(sources, /\d{1,3},\d{3} (unit )?tests/, "no stale test counts");
   assert.equal(profile.email, "sahiljo.work@gmail.com");
+  assert.equal(projects.find((p) => p.slug === "nudge").state, "Closed testing on Google Play");
 });
 
 test("Deployment assets keep the base path prefix", () => {

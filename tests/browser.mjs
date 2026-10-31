@@ -464,6 +464,43 @@ for (const [name, engine] of [["webkit", webkit]]) {
     }
   }
 }
+// The demo stays a link until pressed, and nothing reaches YouTube before that.
+for (const engine of [chromium, webkit]) {
+  const b = await engine.launch();
+  const p = await b.newPage();
+  const requests = [];
+  await p.route(/youtube/, (route) => {
+    requests.push(route.request().url());
+    return route.fulfill({ contentType: "text/html", body: "<title>Player</title>" });
+  });
+  for (const width of [1440, 390]) {
+    await p.setViewportSize({ width, height: width < 700 ? 844 : 1000 });
+    await p.goto(origin, { waitUntil: "networkidle" });
+    await p.goto(`${origin}/work/nudge/`, { waitUntil: "networkidle" });
+    assert.deepEqual(requests, [], "Nothing loads from YouTube before Play");
+    const play = p.getByRole("link", { name: /^Play video/ });
+    const before = await play.boundingBox();
+    assert.ok(Math.abs(before.width / before.height - 9 / 16) < 0.01, "Player keeps 9:16");
+    if (width < 700) await play.click();
+    else {
+      await play.focus();
+      await p.keyboard.press("Enter");
+    }
+    const player = p.getByTitle("Nudge Android app demo");
+    await player.waitFor();
+    assert.match(await player.getAttribute("src"), /^https:\/\/www\.youtube-nocookie\.com\/embed\//);
+    assert.ok(await player.evaluate((el) => el === document.activeElement), "Focus moves to the player");
+    assert.equal(requests.length, 1);
+    assert.equal(
+      new URL(await p.getByRole("link", { name: "Watch on YouTube" }).getAttribute("href")).hostname,
+      "www.youtube.com",
+    );
+    requests.length = 0;
+  }
+  await b.close();
+}
+report.checks.push("Video demo loads nothing from YouTube until pressed, then focuses the player");
+
 const nojs = await chromium.launch();
 try {
   const c = await nojs.newContext({ javaScriptEnabled: false });
@@ -482,6 +519,12 @@ try {
     new URL(await p.locator("a.ao-main").getAttribute("href"), origin).href,
   );
   assert.equal(image.status(), 200);
+  // Without JavaScript the video is a link to YouTube.
+  await p.goto(`${origin}/work/nudge/`);
+  assert.equal(
+    await p.getByRole("link", { name: /^Play video/ }).getAttribute("href"),
+    "https://www.youtube.com/shorts/wadkYV90MEw",
+  );
 } finally {
   await nojs.close();
 }

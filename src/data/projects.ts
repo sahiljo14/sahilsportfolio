@@ -4,7 +4,8 @@ export type State =
   | "In use internally"
   | "Public release"
   | "Public code"
-  | "In progress";
+  | "In progress"
+  | "Closed testing on Google Play";
 
 export type Figure = {
   src: string;
@@ -12,6 +13,15 @@ export type Figure = {
   height: number;
   alt: string;
   caption: string;
+};
+
+export type Video = {
+  id: string;
+  url: string;
+  title: string;
+  poster: string;
+  note: string;
+  moments: { at: string; title: string; text: string }[];
 };
 
 export type Project = {
@@ -25,6 +35,7 @@ export type Project = {
   origin: string[];
   pipeline: { label: string; note: string }[];
   figures: Figure[];
+  video?: Video;
   decisions: { title: string; text: string }[];
   evidence?: string;
   unfinished: string;
@@ -246,7 +257,7 @@ export const projects: Project[] = [
     slug: "nudge",
     name: "Nudge",
     dek: "The deadline buried in a group-chat message, turned into a task you can keep.",
-    state: "In progress",
+    state: "Closed testing on Google Play",
     role: "Built with a teammate. Rule-based parsing, date resolution and local storage.",
     stack: ["Flutter", "Dart", "SQLite"],
     links: [{ label: "Source on GitHub", url: "https://github.com/sahiljo14/nudge-app" }],
@@ -260,6 +271,35 @@ export const projects: Project[] = [
       { label: "Task", note: "Stored locally in SQLite." },
     ],
     figures: [],
+    video: {
+      id: "wadkYV90MEw",
+      url: "https://www.youtube.com/shorts/wadkYV90MEw",
+      title: "Nudge Android app demo",
+      poster: "/images/nudge-demo.webp",
+      note: "Published in May 2026. The Android app is in closed testing on Google Play, so it isn’t publicly available yet.",
+      moments: [
+        {
+          at: "0:04",
+          title: "Type it the way you’d say it.",
+          text: "“Os assignment kal 5 baje urgent” becomes an urgent assignment, due the next day at 17:00.",
+        },
+        {
+          at: "0:22",
+          title: "One message, two tasks.",
+          text: "“Maths test kal, physics test parso” splits into two exams on different days, with reminders.",
+        },
+        {
+          at: "0:48",
+          title: "See it on a calendar.",
+          text: "Tasks land on the day they’re due.",
+        },
+        {
+          at: "0:58",
+          title: "Scan an image.",
+          text: "A deadline list shared from a chat goes through OCR and comes out as three tasks linked to that image.",
+        },
+      ],
+    },
     decisions: [
       {
         title: "Meet the message where it is.",
@@ -271,7 +311,7 @@ export const projects: Project[] = [
       },
     ],
     unfinished:
-      "Parsing and local storage work. OCR and reminders are on the roadmap, not done.",
+      "Nudge is still in closed testing on Google Play, so it hasn’t had a public release.",
     learned:
       "Small products can ask good questions. What if the interface adapted to how people already talk?",
   },
@@ -280,7 +320,7 @@ export const projects: Project[] = [
 export const built = [
   { name: "Kairyo", line: "Desktop AI manga upscaler with a job queue and CPU fallback.", stack: "Python · PyQt6 · PyTorch", state: "Public release", href: "/work/kairyo/" },
   { name: "EnviroSense", line: "Sensors to MQTT to PostgreSQL to a React dashboard. With a teammate.", stack: "MQTT · Node.js · PostgreSQL · React", state: "Public code", href: "/work/envirosense/" },
-  { name: "Nudge", line: "Finds deadlines in English, Hinglish and Marathi messages. With a teammate.", stack: "Flutter · Dart · SQLite", state: "In progress", href: "/work/nudge/" },
+  { name: "Nudge", line: "Finds deadlines in English, Hinglish and Marathi messages. With a teammate.", stack: "Flutter · Dart · SQLite", state: "Closed testing on Google Play", href: "/work/nudge/" },
   { name: "RISC-V processor", line: "A single-cycle 32-bit datapath in Verilog, for a subset of the instruction set.", stack: "Verilog · testbenches", state: "Public code", href: "https://github.com/sahiljo14/riscv-single-cycle-processor" },
   { name: "ESP8266 weather station", line: "Temperature, humidity and pressure from the sensor up.", stack: "ESP8266 · DHT22 · BMP180", state: "Public code", href: "https://github.com/sahiljo14/esp8266-weather-station" },
   { name: "URL shortener", line: "Short links with stored click analytics.", stack: "Node.js · Express · MongoDB", state: "Public code", href: "https://github.com/sahiljo14/url-shortener" },

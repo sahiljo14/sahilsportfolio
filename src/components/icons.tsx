@@ -14,6 +14,13 @@ export function Expand(props: IconProps) {
     </svg>
   );
 }
+export function Play(props: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...props}>
+      <path d="M8 5.5v13a.75.75 0 0 0 1.15.63l10.2-6.5a.75.75 0 0 0 0-1.26L9.15 4.87A.75.75 0 0 0 8 5.5Z" />
+    </svg>
+  );
+}
 export function Sun(props: IconProps) {
   return (
     <svg
