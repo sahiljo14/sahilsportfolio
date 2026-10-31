@@ -815,10 +815,14 @@ html:has(.lightbox[open]) {
   line-height: 1.15;
 }
 
-/* 5. The handheld: the one drench. The photo fills its side, edge to edge. */
+/* 5. The handheld: the one drench. A single panel, split into copy and photo. */
 .handheld {
   display: grid;
-  grid-template-columns: minmax(0, 46fr) minmax(0, 54fr);
+  grid-template-columns: minmax(0, 44fr) minmax(0, 56fr);
+  width: min(100% - 2 * var(--gutter), var(--max));
+  margin-inline: auto;
+  border-radius: clamp(16px, 2vw, 28px);
+  overflow: clip;
   background: var(--board);
   color: var(--board-ink);
   --ink: var(--board-ink);
@@ -828,28 +832,30 @@ html:has(.lightbox[open]) {
   --select: #1f4d3c;
 }
 .handheld-copy {
-  padding-block: var(--space);
-  padding-inline: var(--edge) clamp(2rem, 5vw, 5rem);
+  display: flex;
+  flex-direction: column;
+  padding: clamp(2.5rem, 4vw, 4rem) clamp(2rem, 4vw, 4rem);
 }
 .handheld h2 {
-  font-size: var(--fs-d1);
+  font-size: var(--fs-d2);
   margin-top: clamp(1.5rem, 3vw, 2.5rem);
 }
 .handheld-copy > p:not(.age):not(.statement) {
-  margin-top: 1.75rem;
+  margin-block: 1.75rem 2rem;
   color: var(--board-2);
 }
 .handheld .statement {
-  margin-top: 2rem;
+  margin-top: auto;
   padding-top: 1.5rem;
   border-top: 1px solid var(--board-rule);
 }
-/* The photo breaks the top of the band, so the paper runs into the green. */
+/* Sized to the photo so the row keeps every button in frame. Stretch is
+   explicit: with an aspect-ratio, a grid item would otherwise fill neither
+   its row nor, once the copy is taller, stay inside its column. */
 .handheld-photo {
   position: relative;
-  min-height: 34rem;
-  margin-top: calc(-1 * clamp(2rem, 4vw, 4rem));
-  overflow: hidden;
+  aspect-ratio: 1500 / 1682;
+  place-self: stretch;
 }
 .handheld-photo img {
   position: absolute;
@@ -857,14 +863,14 @@ html:has(.lightbox[open]) {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 50% 30%;
+  object-position: 0% 60%;
 }
 .handheld-photo figcaption {
   position: absolute;
-  left: 1rem;
-  bottom: 1rem;
+  left: 0.25rem;
+  bottom: 0.25rem;
   margin: 0;
-  padding: 0.5rem 0.8rem;
+  padding: 0.25rem 0.6rem;
   border-radius: 8px;
   background: rgb(10 16 13 / 0.82);
   color: #f2f4f1;
@@ -2247,6 +2253,36 @@ main:has(.closing) ~ .site-footer {
   :root {
     --max: 104rem;
   }
+  .handheld {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  .handheld h2 {
+    font-size: var(--fs-d1);
+  }
+}
+
+/* Small laptops: tighter copy, so the panel stays short enough for the whole photo. */
+@media (min-width: 1101px) and (max-width: 1279px) {
+  .handheld-copy {
+    padding-block: 2rem;
+  }
+  .handheld .age {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+  .handheld .age b {
+    font-size: var(--fs-d3);
+  }
+  .handheld h2 {
+    margin-top: 1rem;
+  }
+  .handheld-copy > p:not(.age):not(.statement) {
+    margin-block: 1.25rem 1.5rem;
+  }
+  .handheld .statement {
+    font-size: var(--fs-title);
+  }
 }
 
 /* Tablet */
@@ -2293,10 +2329,23 @@ main:has(.closing) ~ .site-footer {
     padding-block: var(--space) clamp(3rem, 6vw, 4rem);
     padding-inline: var(--gutter);
   }
+  .handheld h2 {
+    font-size: var(--fs-d1);
+  }
   .handheld-photo {
-    min-height: 0;
-    margin-top: 0;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: auto;
+  }
+  .handheld-photo img {
+    position: static;
+    height: auto;
+    aspect-ratio: 1;
+  }
+  .handheld-photo figcaption {
+    position: static;
+    padding: 0.75rem var(--gutter) 1.25rem;
+    background: none;
+    color: var(--ink-3);
+    border-radius: 0;
   }
   .turn-note:nth-of-type(1) {
     grid-column: 1 / 7;
@@ -2456,21 +2505,18 @@ main:has(.closing) ~ .site-footer {
     min-height: 3rem;
   }
   /* On phones captions leave the photos and sit below them. */
-  .hero-photo,
-  .handheld-photo {
+  .hero-photo {
     min-height: 0;
     background: none;
   }
-  .hero-photo img,
-  .handheld-photo img {
+  .hero-photo img {
     position: static;
     height: auto;
   }
   .hero-photo img {
     aspect-ratio: 4 / 5;
   }
-  .hero-photo figcaption,
-  .handheld-photo figcaption {
+  .hero-photo figcaption {
     position: static;
     max-width: none;
     padding: 0.75rem var(--gutter) 0;
@@ -2478,9 +2524,6 @@ main:has(.closing) ~ .site-footer {
     color: var(--ink-3);
     font-size: var(--fs-meta);
     border-radius: 0;
-  }
-  .handheld-photo figcaption {
-    padding-bottom: 1.25rem;
   }
   .minute h2 {
     position: static;
@@ -2515,11 +2558,9 @@ main:has(.closing) ~ .site-footer {
   .exp-py {
     display: block;
   }
-  .handheld-photo {
-    aspect-ratio: auto;
-  }
-  .handheld-photo img {
-    aspect-ratio: 1;
+  .handheld {
+    width: auto;
+    border-radius: 0;
   }
   .turn-note {
     margin-top: 2.5rem;

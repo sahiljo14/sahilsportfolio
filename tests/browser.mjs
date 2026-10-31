@@ -464,6 +464,30 @@ for (const [name, engine] of [["webkit", webkit]]) {
     }
   }
 }
+// The console photo stays inside its panel, with the board and buttons in frame.
+for (const engine of [chromium, webkit]) {
+  const b = await engine.launch();
+  const p = await b.newPage();
+  await p.goto(origin);
+  for (const width of [1920, 1440, 1280, 1101, 1100, 1024, 768, 390, 375, 320]) {
+    await p.setViewportSize({ width, height: 900 });
+    const { panel, copy, img } = await p.evaluate(() => {
+      const box = (s) => document.querySelector(s).getBoundingClientRect().toJSON();
+      return { panel: box(".handheld"), copy: box(".handheld-copy"), img: box(".handheld-photo img") };
+    });
+    const at = `at ${width}px`;
+    const near = (x, y, what) => assert.ok(Math.abs(x - y) <= 1, `${what} ${at}: ${x} vs ${y}`);
+    assert.ok(img.top >= panel.top - 1 && img.bottom <= panel.bottom + 1, `Photo inside the panel ${at}`);
+    near(img.left >= copy.right - 1 ? img.right : img.width, img.left >= copy.right - 1 ? panel.right : panel.width, "Photo meets the panel edge");
+    if (width > 1100) {
+      near(img.top, copy.top, "Tops align");
+      near(img.bottom, copy.bottom, "Bottoms align");
+    }
+    const ratio = img.width / img.height;
+    assert.ok(ratio >= 0.855 && ratio <= 1, `Whole board and every button in frame ${at}: ${ratio}`);
+  }
+  await b.close();
+}
 // The demo stays a link until pressed, and nothing reaches YouTube before that.
 for (const engine of [chromium, webkit]) {
   const b = await engine.launch();

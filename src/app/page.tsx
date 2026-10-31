@@ -241,7 +241,7 @@ export default function Home() {
             alt="Close-up of the handheld console: the ESP32 development board soldered onto green perfboard, with hand-labelled SE, ST, M, B and arrow buttons below it."
             w={1500}
             h={1682}
-            sizes="(max-width: 760px) 100vw, 60vw"
+            sizes="(max-width: 1100px) 100vw, 56vw"
           />
           <figcaption>The ESP32, the hand-labelled buttons, and a lot of solder.</figcaption>
         </figure>
