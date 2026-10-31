@@ -16,6 +16,9 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: read
     env:
       NEXT_PUBLIC_BASE_PATH: /sahilsportfolio
       NEXT_PUBLIC_SITE_URL: https://sahiljo14.github.io/sahilsportfolio
@@ -27,12 +30,18 @@ jobs:
         with:
           node-version: 22
           cache: npm
+      - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
       - run: npm ci
+      - run: npm audit --omit=dev --audit-level=high
       - run: npm run typecheck
       - run: npm run lint
       - run: npm run build
       # After the build: the content tests read the exported pages in out/.
       - run: npm test
+      # The private-term denylist stays local, so public CI checks for secret shapes instead.
+      - name: Check the build for secrets, local paths and source maps
+        run: |
+          ! { find out -name '*.map' | grep . || grep -rElI 'AKIA[0-9A-Z]{16}|gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{20,}|sk-(ant-)?[A-Za-z0-9_-]{20,}|-----BEGIN [A-Z ]*PRIVATE KEY|/Users/[A-Za-z0-9._-]+' out; }
       - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: out
