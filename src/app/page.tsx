@@ -167,15 +167,18 @@ export default function Home() {
         </header>
         <div className="exp-grid g12">
           <article className="exp exp-eth">
-            <Age pre="Around" n="13" />
+            <Age pre="From around" n="13" />
             <h3>Ethereum</h3>
             <p className="statement">
               I thought it could make me money. Then the technology got more
               interesting than the money.
             </p>
             <p>
-              Trading, mining, whitepapers, DeFi, and one attempt at my own
-              coin.
+              Whitepapers, trading, DeFi protocols, investing in other coins,
+              mining, and one attempt at my own token.
+            </p>
+            <p className="statement">
+              I received an airdrop and sold the tokens for about $10,000.
             </p>
           </article>
           <article className="exp exp-yt">

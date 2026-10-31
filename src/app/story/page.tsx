@@ -161,16 +161,22 @@ export default function Story() {
 
       <section className="read-part" aria-labelledby="p2">
         <PartHead n={1} />
-        <Chapter id="ethereum" age="~13" title="Ethereum, for the money at first">
+        <Chapter id="ethereum" age="From ~13" title="Ethereum, for the money at first">
           <p>
             Around the same time I found Ethereum. I’ll be straightforward about
             why: I thought it could make me money.
           </p>
           <p>
-            Then the technology became more interesting than the money. I traded,
-            tried mining, researched different coins, read whitepapers, explored
-            decentralized finance, and at one point tried to create my own
-            cryptocurrency.
+            Then the technology became more interesting than the money. I
+            researched crypto projects, read whitepapers and tried trading. I
+            explored DeFi protocols and the opportunities around them, started
+            investing in other cryptocurrencies, experimented with mining, and
+            at one point attempted to create my own token.
+          </p>
+          <p>
+            Paying attention to new projects led somewhere concrete. I received
+            an airdrop and sold the tokens for about $10,000. That’s what I
+            actually sold them for, not a peak on a chart.
           </p>
           <p>
             I still follow the space. These days most of my attention goes to AI,
