@@ -7,7 +7,7 @@ import { asset, profile, site, socialImage } from "@/data/profile";
 export const metadata: Metadata = {
   title: "The full story",
   description:
-    "The long version: from wanting a gaming PC to building Agent Orchestrator and co-founding Kramiva Technologies.",
+    "The long version: from wanting a gaming PC to building Diffrail and co-founding Kramiva Technologies.",
   alternates: { canonical: `${site.url}/story/` },
   openGraph: { images: [socialImage], url: `${site.url}/story/` },
   twitter: { card: "summary_large_image", images: [socialImage.url] },
@@ -274,7 +274,7 @@ export default function Story() {
             coding agents.
           </p>
         </Chapter>
-        <Chapter id="orchestrator" age="Jul 2026" title="Agent Orchestrator">
+        <Chapter id="diffrail" age="Jul 2026" title="Diffrail">
           <p>
             I wanted several coding agents working on one project together, with
             me still in control of what they did. I couldn’t find a tool that
@@ -286,7 +286,7 @@ export default function Story() {
             coding agent has this problem. That’s when it stopped being an
             internal tool and became a product I want other developers to use.
           </p>
-          <a className="text-link" href={asset("/work/agent-orchestrator/")}>
+          <a className="text-link" href={asset("/work/diffrail/")}>
             The case study
           </a>
         </Chapter>

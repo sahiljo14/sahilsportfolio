@@ -69,7 +69,7 @@ spacing:
 
 **Creative North Star: "One want, two voices."** An edited feature about one person, not a template repeated down a page. Each home-page section is composed on its own, and `/story/` is a long-form magazine piece.
 
-Two voices do the structural work. **Source Serif 4 at display size is Sahil speaking**: the story's headings, statements and ages. **Schibsted Grotesk names the things he built** (Agent Orchestrator, Lead Finder, Kramiva) and carries labels. The hero is the rule stated once: the want in grotesk, the consequence in serif.
+Two voices do the structural work. **Source Serif 4 at display size is Sahil speaking**: the story's headings, statements and ages. **Schibsted Grotesk names the things he built** (Diffrail, Lead Finder, Kramiva) and carries labels. The hero is the rule stated once: the want in grotesk, the consequence in serif.
 
 ## Colors
 
@@ -79,7 +79,7 @@ Four fields, each with a job:
 - **Paper**: the default.
 - **Raised paper**: story part openers, and the fields behind diagrams. On the home page paper runs unbroken, so the page reads as one piece rather than a stack of bands.
 - **Board green**: the handheld is the one drench per page. The only other use is the Approve step in the Lead Finder flow, a small mark for the one step a person owns.
-- **Screen**: the lit Agent Orchestrator panel, and the closing section, which runs into the home page footer.
+- **Screen**: the lit Diffrail panel, and the closing section, which runs into the home page footer.
 
 **Dark mode raises fields instead of sinking them.** `--screen` is lighter than `--paper` at night, so sections keep their edges. Any new dark field must obey this.
 
@@ -89,7 +89,7 @@ Four fields, each with a job:
 
 - Hero: copy and an edge-to-edge console photo, filling the first viewport. Headline size is `min(15.6cqi, 13.4svh)`, so it fits its column and leaves the actions on screen. Portrait tablets and phones stack.
 - Spacing: each paper section owns the `--space` above it, so two sections never stack their padding. The handheld photo rises out of its band to tie the green to the paper above.
-- Agent Orchestrator: a rounded panel inset from the viewport, holding a staggered collage of the 30 October captures, arranged so nothing covers the agents at work. Phones lead with the capture that reads at that size.
+- Diffrail: a rounded panel inset from the viewport, holding a staggered collage of the 2 November captures, arranged so nothing covers the agents at work. Phones lead with the capture that reads at that size.
 - Lead Finder: a track that runs to a person and stops. Research, approval and sending are separate zones, each with its safeguard beneath. It uses only what the case study already says.
 - Closing: the headline repeats the hero's two voices, so the page ends the way it began.
 - Other builds: `subgrid` tiles, so media and text rows align across a row.
@@ -106,7 +106,7 @@ Four fields, each with a job:
 
 ## Motion
 
-One orchestrated hero entrance, then only scroll-linked motion that means something: the AO windows settle, "Relax." gets crossed out, the story keeps a reading-progress line. All of it sits behind `prefers-reduced-motion: no-preference` and `@supports (animation-timeline: view())`.
+One orchestrated hero entrance, then only scroll-linked motion that means something: the Diffrail windows settle, "Relax." gets crossed out, the story keeps a reading-progress line. All of it sits behind `prefers-reduced-motion: no-preference` and `@supports (animation-timeline: view())`.
 
 ## Do's and Don'ts
 

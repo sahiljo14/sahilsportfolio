@@ -10,20 +10,20 @@ import { Capture } from "@/components/shot";
 import { asset, profile } from "@/data/profile";
 import { projects } from "@/data/projects";
 
-const ao = projects.find((p) => p.slug === "agent-orchestrator")!;
+const ao = projects.find((p) => p.slug === "diffrail")!;
 const leadFinder = projects.find((p) => p.slug === "lead-finder")!;
 const aoFigure = (name: string) =>
   ao.figures.find((f) => f.src.endsWith(`${name}.webp`))!;
-const aoAgents = aoFigure("ao-agents");
-const aoPlan = aoFigure("ao-plan");
-const aoNeedsYou = aoFigure("ao-needs-you");
+const aoAgents = aoFigure("diffrail-board");
+const aoPlan = aoFigure("diffrail-plan");
+const aoNeedsYou = aoFigure("diffrail-needs-you");
 
 const oneMinute = [
   { age: "~11", text: "Wanted a gaming PC. Got obsessed with what goes inside one.", href: "/story/#the-pc" },
   { age: "~12", text: "Tried YouTube and affiliate marketing to pay for it.", href: "/story/#paying-for-it" },
   { age: "~13", text: "Built it. Found Ethereum. Taught myself Python.", href: "/story/#building-it" },
   { age: "18", text: "Soldered together my own handheld game console.", href: "/story/#the-handheld" },
-  { age: "Now", text: "Building Agent Orchestrator. One of three co-founders of Kramiva.", href: "#orchestrator" },
+  { age: "Now", text: "Building Diffrail. One of three co-founders of Kramiva.", href: "#diffrail" },
 ];
 
 const distros = ["Arch", "Ubuntu", "Manjaro", "EndeavourOS", "Pop!_OS", "CasaOS", "ZimaOS"];
@@ -86,7 +86,7 @@ export default function Home() {
             <a className="button" href={asset("/story/")}>
               Read the story
             </a>
-            <a className="button button-quiet" href="#orchestrator">
+            <a className="button button-quiet" href="#diffrail">
               See what I’m building
             </a>
           </div>
@@ -273,11 +273,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 7. Agent Orchestrator */}
-      <section className="ao" id="orchestrator" aria-labelledby="ao-title">
+      {/* 7. Diffrail */}
+      <section className="ao" id="diffrail" aria-labelledby="ao-title">
         <div className="ao-panel">
           <header className="ao-head">
-            <h2 id="ao-title">Agent Orchestrator</h2>
+            <h2 id="ao-title">Diffrail</h2>
             <div className="ao-sub">
               <p className="ao-when">What I’m building, since July 2026.</p>
               <p className="ao-dek">
@@ -295,10 +295,10 @@ export default function Home() {
               <Capture figure={aoNeedsYou} className="ao-float ao-float-needs" sizes="(max-width: 760px) 100vw, 26vw" />
             </div>
             <figcaption>
-              Real captures from the demo build of 30 October 2026, with a sample
-              project and scripted agents: one request running across four
-              coding agents, a plan waiting for approval, and the panel that puts
-              what needs you first. Select one to enlarge it.
+              Real captures from the build of 2 November 2026, with a sample
+              project and stand-in agents printing scripted output: one request
+              running on three coding agents, its plan waiting for approval, and
+              a question only you can answer. Select one to enlarge it.
             </figcaption>
           </figure>
           <div className="ao-points">
@@ -315,7 +315,7 @@ export default function Home() {
               designed the orchestration layer, and wrote all 13 of its
               architecture decision records.
             </p>
-            <a className="button button-on-dark" href={asset("/work/agent-orchestrator/")}>
+            <a className="button button-on-dark" href={asset("/work/diffrail/")}>
               Read the case study
             </a>
           </div>

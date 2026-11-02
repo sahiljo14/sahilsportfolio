@@ -10,7 +10,7 @@ export function SiteHeader() {
         </a>
         <nav aria-label="Main">
           <a href={asset("/story/")}>Story</a>
-          <a href={asset("/work/agent-orchestrator/")}>Agent Orchestrator</a>
+          <a href={asset("/work/diffrail/")}>Diffrail</a>
           <a href={asset("/#built")}>Built</a>
           <a href={asset("/#contact")}>Contact</a>
         </nav>

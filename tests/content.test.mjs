@@ -54,8 +54,8 @@ test("Public content keeps private, confidential and upstream names out", (t) =>
   if (!denylist.length) t.diagnostic("no local .private-denylist; skipping name checks");
   for (const term of denylist) assert.ok(!sources.includes(term), "denylisted term in public content");
   assert.doesNotMatch(sources, /your_|localhost|127\.0\.0\.1/);
-  const ao = projects.find((p) => p.slug === "agent-orchestrator");
-  assert.equal(ao.links.length, 0, "private repository is never linked");
+  const ao = projects.find((p) => p.slug === "diffrail");
+  assert.deepEqual(ao.links.map((l) => l.url), ["https://diffrail.com"], "private repository is never linked");
   assert.match(ao.state, /not publicly released/);
   for (const slug of ["envirosense", "nudge"])
     assert.match(projects.find((p) => p.slug === slug).role, /teammate/);
@@ -95,4 +95,6 @@ test("Production export includes complete static pages and SEO artifacts", () =>
       assert.ok(!html.toLowerCase().includes(term), `${route}: denylisted term`);
   }
   assert.match(readFileSync("out/index.html", "utf8"), /application\/ld\+json/);
+  // The product's old address keeps working.
+  assert.match(readFileSync("out/work/agent-orchestrator/index.html", "utf8"), /http-equiv="refresh" content="0; url=\.\.\/diffrail\/"/);
 });

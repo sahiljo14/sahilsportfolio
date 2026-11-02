@@ -8,7 +8,7 @@ const origin = process.env.PREVIEW_URL ?? "http://127.0.0.1:3000";
 const routes = [
   "/",
   "/story/",
-  "/work/agent-orchestrator/",
+  "/work/diffrail/",
   "/work/lead-finder/",
   "/work/kairyo/",
   "/work/envirosense/",
@@ -163,7 +163,7 @@ try {
           (width === 1440 || width === 390) &&
           (route === "/" ||
             route === "/work/kairyo/" ||
-            route === "/work/agent-orchestrator/")
+            route === "/work/diffrail/")
         ) {
           for (const img of await page.locator("img:visible").all()) {
             await img.scrollIntoViewIfNeeded();

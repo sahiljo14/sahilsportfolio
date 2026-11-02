@@ -1,6 +1,6 @@
 # Sahil Joshi
 
-A first-person, story-first personal site: how wanting a gaming PC led through hardware, crypto, Python, Linux and electronics to building Agent Orchestrator and co-founding Kramiva Technologies. Next.js, React, TypeScript and plain CSS, exported as static HTML. Self-hosted Schibsted Grotesk (display) and Source Serif 4 (reading), both SIL OFL, licenses in `public/`.
+A first-person, story-first personal site: how wanting a gaming PC led through hardware, crypto, Python, Linux and electronics to building Diffrail and co-founding Kramiva Technologies. Next.js, React, TypeScript and plain CSS, exported as static HTML. Self-hosted Schibsted Grotesk (display) and Source Serif 4 (reading), both SIL OFL, licenses in `public/`.
 
 The visual system is documented in `DESIGN.md`. Private working notes (fact sheet, product context, design-review files) are kept outside this repository.
 

@@ -44,13 +44,13 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    slug: "agent-orchestrator",
-    name: "Agent Orchestrator",
+    slug: "diffrail",
+    name: "Diffrail",
     dek: "One conversation, several AI coding agents, and a person who stays in charge.",
     state: "Alpha, not publicly released",
     role: "I started it in July 2026 and have written most of its commits since. I designed the orchestration layer and wrote all of its architecture decision records. Two collaborators joined in September and October.",
     stack: ["Electron", "React", "TypeScript", "SQLite", "xterm.js", "Git worktrees"],
-    links: [],
+    links: [{ label: "diffrail.com", url: "https://diffrail.com" }],
     origin: [
       "While planning a software agency, I wanted to run several AI coding agents on one project at once: split a goal into pieces, let different agents work in parallel, and keep control of what actually changed. I looked for a tool that worked the way I had in mind and couldn’t find one. So I started building it for myself.",
       "As I worked on it, it became obvious the problem wasn’t specific to my agency. Anyone running more than one coding agent ends up as a human scheduler, juggling terminals, branches and the question of whether anything actually worked. That changed how I thought about it. It stopped being an internal tool and became a product.",
@@ -66,28 +66,28 @@ export const projects: Project[] = [
     ],
     figures: [
       {
-        src: "/images/ao-agents.webp",
-        width: 1800,
-        height: 600,
-        alt: "Agent Orchestrator running one request as five tasks. The agents panel lists Claude Code, Codex, Antigravity and Kimi Code working, and one task waiting.",
+        src: "/images/diffrail-board.webp",
+        width: 1808,
+        height: 800,
+        alt: "Diffrail’s Live board running a plan in stages. Claude Code, Codex and Antigravity each work on part of a pricing page in parallel, a fourth task waits for them, and their terminals show output below.",
         caption:
-          "Real capture. One request split into five tasks, four running in parallel on four different coding agents. Demo build of 30 October 2026, sample project, scripted agents, cropped.",
+          "Real capture. One plan running on three coding agents in parallel, with a fourth task waiting for them. Build of 2 November 2026, sample project, stand-in agents printing scripted output, cropped.",
       },
       {
-        src: "/images/ao-needs-you.webp",
-        width: 760,
-        height: 1073,
-        alt: "The Agents panel sorted by what needs a person: Claude Code waiting on a question, a plan change waiting for review, one task that went wrong with exit code 1, and OpenCode still working.",
+        src: "/images/diffrail-needs-you.webp",
+        width: 800,
+        height: 562,
+        alt: "A question from Claude Code marked “Only you can answer”: annual prices like $115.20, keep the cents or round to the nearest dollar, with both options and an Answer button.",
         caption:
-          "Real capture. The Agents panel puts what needs you first: a question from Claude Code, a plan change to review, a failure with its exit code. Demo build of 30 October 2026, scripted agents, cropped to the panel.",
+          "Real capture. When an agent has a question, it comes to you. Build of 2 November 2026, stand-in agents printing scripted output, cropped to the question.",
       },
       {
-        src: "/images/ao-plan.webp",
-        width: 1400,
-        height: 453,
-        alt: "A two-part plan waiting for approval: sign-in assigned to Claude Code and orders assigned to Codex, with the note “Nothing starts until you press Start” and buttons to start, review or discard.",
+        src: "/images/diffrail-plan.webp",
+        width: 1520,
+        height: 650,
+        alt: "A four-task plan waiting for review: three tasks in parallel on Claude Code, Codex and Antigravity, then one on Codex, with the note “Nothing starts until you press Start” and buttons to start, review or discard.",
         caption:
-          "Real capture. A plan waiting for approval, with each part assigned to a different agent. Nothing starts until you press Start. Demo build of 30 October 2026, sample project, cropped to the plan.",
+          "Real capture. A plan waiting for approval, with each task assigned to an agent. Nothing starts until you press Start. Build of 2 November 2026, sample project, cropped to the plan.",
       },
     ],
     decisions: [
@@ -117,7 +117,7 @@ export const projects: Project[] = [
       },
     ],
     evidence:
-      "The project has unit tests and end-to-end tests that drive the real Electron app. The latest demo build passed its unit tests, but its full end-to-end run still had a failure, and lint and an architecture check carry known issues. So it is a tested demo, not a validated release, and I’d rather say that than round it up. These suites cover the whole project, not only code I wrote.",
+      "The project has unit tests and end-to-end tests that drive the real Electron app. The 30 October demo build passed its unit tests, but its full end-to-end run still had a failure, and lint and an architecture check carry known issues. So it is a tested demo, not a validated release, and I’d rather say that than round it up. These suites cover the whole project, not only code I wrote.",
     unfinished:
       "There’s no public release yet. Collaboration on a shared workspace is in an early form. Attaching files in the chat is designed but not built. I’m also experimenting with a native Rust core on a separate branch; it is not part of the demo build.",
     learned:

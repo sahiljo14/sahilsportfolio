@@ -1,7 +1,7 @@
 /* Two voices. Source Serif 4 at display size is Sahil talking; Schibsted
    Grotesk names the things he built and carries the labels.
    Four fields: cool paper, raised paper, perfboard green (the one drench) and
-   the lit Agent Orchestrator panel. */
+   the lit Diffrail panel. */
 
 :root {
   color-scheme: light;
@@ -901,7 +901,7 @@ html:has(.lightbox[open]) {
   color: var(--ink-2);
 }
 
-/* 7. Agent Orchestrator: a lit panel set into the page, so it holds its edge
+/* 7. Diffrail: a lit panel set into the page, so it holds its edge
    against either theme. Everything inside is a real capture. */
 .ao {
   padding-inline: clamp(0.5rem, 1.2vw, 1.25rem);
@@ -927,10 +927,12 @@ html:has(.lightbox[open]) {
   --accent: #86d6ae;
   --select: #1f4d3c;
 }
+/* The name runs the panel's full width at every size. */
 .ao-head h2 {
-  font-size: 10.1cqi;
+  margin-left: -0.05em;
+  font-size: 31.4cqi;
   font-weight: 880;
-  line-height: 1;
+  line-height: 0.9;
   letter-spacing: -0.045em;
   white-space: nowrap;
 }
@@ -954,13 +956,19 @@ html:has(.lightbox[open]) {
   max-width: 40rem;
 }
 .ao-stage {
+  display: grid;
   margin-top: clamp(2.5rem, 5vw, 4.5rem);
 }
+.ao-collage,
+.ao-stage figcaption {
+  grid-area: 1 / 1;
+}
 /* Staggered so nothing covers the agents at work: the plan overlaps only the
-   capture's bottom edge, the panel only its right edge. */
+   capture's bottom edge, the question only its right edge. The caption takes
+   the space beside the plan. */
 .ao-collage {
   position: relative;
-  padding-bottom: 15.5cqi;
+  padding-bottom: 20.6cqi;
 }
 .ao-main {
   width: 76%;
@@ -981,9 +989,9 @@ html:has(.lightbox[open]) {
     0 30px 60px -18px rgb(0 0 0 / 0.8);
 }
 .ao-float-plan {
-  left: 5%;
+  right: 0;
   bottom: 0;
-  width: 52%;
+  width: 50%;
 }
 .ao-float-needs {
   right: 0;
@@ -991,10 +999,7 @@ html:has(.lightbox[open]) {
   width: 26%;
 }
 .ao-main .capture-hint {
-  top: auto;
-  right: auto;
-  bottom: 0.6rem;
-  left: 0.6rem;
+  right: calc(2.6% + 0.6rem);
 }
 .ao-float-needs .capture-hint {
   top: auto;
@@ -1002,8 +1007,8 @@ html:has(.lightbox[open]) {
 }
 .ao-stage figcaption {
   position: relative;
-  margin-top: 1.5rem;
-  max-width: 54rem;
+  margin-top: calc(33.6cqi + 1.5rem); /* the board's height */
+  max-width: 44%;
   color: var(--screen-2);
 }
 .ao-points {
@@ -2565,11 +2570,6 @@ main:has(.closing) ~ .site-footer {
   .turn-note {
     margin-top: 2.5rem;
   }
-  .ao-head h2 {
-    font-size: 16.4cqi;
-    white-space: normal;
-    line-height: 1.02;
-  }
   .ao-sub {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -2585,16 +2585,14 @@ main:has(.closing) ~ .site-footer {
   }
   .ao-main {
     width: 100%;
-    aspect-ratio: 3 / 2;
+    aspect-ratio: 4 / 3;
   }
   .ao-main img {
-    width: 300%;
+    width: 170%;
     max-width: none;
-    translate: -66.67% 0;
   }
   .ao-main .capture-hint {
     right: 0.6rem;
-    left: auto;
   }
   .ao-float {
     position: relative;
@@ -2604,8 +2602,11 @@ main:has(.closing) ~ .site-footer {
   .ao-float-needs {
     order: -1;
   }
-  .ao-float-plan img {
-    width: 165%;
+  .ao-stage {
+    display: block;
+  }
+  .ao-stage figcaption {
+    margin-top: 1.5rem;
     max-width: none;
   }
   .ao-foot .button {

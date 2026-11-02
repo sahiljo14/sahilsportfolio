@@ -14,7 +14,7 @@ export const site = {
     "https://sahiljo14.github.io/sahilsportfolio",
   title: "Sahil Joshi — I wanted a gaming PC. Everything else followed.",
   description:
-    "The story of how wanting a gaming PC led Sahil Joshi through hardware, crypto, Python, Linux and electronics to building Agent Orchestrator and co-founding Kramiva Technologies.",
+    "The story of how wanting a gaming PC led Sahil Joshi through hardware, crypto, Python, Linux and electronics to building Diffrail and co-founding Kramiva Technologies.",
 };
 
 export const socialImage = {
